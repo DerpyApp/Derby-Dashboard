@@ -2,6 +2,7 @@ import { useState } from 'react';
 import VenueCard from '../components/VenueCard';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 export default function VenuesPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -52,29 +53,8 @@ export default function VenuesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-slate-900 to-slate-950 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Venues in Egypt
-          </h1>
-          <p className="text-lg text-gray-400 mb-8 max-w-2xl">
-            Discover and book the best sports venues across Cairo, Giza, and Alexandria.
-            Find your perfect spot for football, tennis, and more.
-          </p>
-        </div>
-      </section>
-
-      {/* Search Section */}
-      <section className="bg-slate-900 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <SearchBar 
-            value={searchQuery} 
-            onChange={setSearchQuery}
-            placeholder="Search venues by name or location..."
-          />
-        </div>
-      </section>
+      {/* Header with Navigation and Hero */}
+      <Header />
 
       {/* Venues Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">

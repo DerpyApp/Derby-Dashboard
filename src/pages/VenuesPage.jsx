@@ -6,6 +6,7 @@ import Header from '../components/Header';
 
 export default function VenuesPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [view, setView] = useState('grid');
 
   const venues = [
     {
@@ -54,20 +55,26 @@ export default function VenuesPage() {
   return (
     <div className="min-h-screen bg-slate-950">
       {/* Header with Navigation and Hero */}
-      <Header />
+      <Header onViewChange={setView} />
 
       {/* Venues Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {filteredVenues.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {filteredVenues.map(venue => (
-                <VenueCard key={venue.id} venue={venue} />
-              ))}
-            </div>
+          {view === 'grid' ? (
+            filteredVenues.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {filteredVenues.map(venue => (
+                  <VenueCard key={venue.id} venue={venue} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <p className="text-gray-400 text-lg">No venues found. Try a different search.</p>
+              </div>
+            )
           ) : (
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg">No venues found. Try a different search.</p>
+              <p className="text-gray-400 text-lg">Map view coming soon...</p>
             </div>
           )}
         </div>

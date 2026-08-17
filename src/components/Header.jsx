@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import ViewToggle from './ViewToggle';
 
-export default function Header() {
+export default function Header({ onViewChange }) {
   return (
     <header className="bg-slate-950 border-b border-yellow-400">
       {/* Top Navigation */}
@@ -58,13 +59,8 @@ export default function Header() {
           </div>
 
           {/* View Toggle */}
-          <div className="flex gap-2 ml-auto">
-            <button className="text-gray-400 hover:text-white p-2 transition-colors">
-              📊 Grid
-            </button>
-            <button className="text-gray-400 hover:text-white p-2 transition-colors">
-              📋 Row
-            </button>
+          <div className="ml-auto">
+            <ViewToggle onViewChange={onViewChange} />
           </div>
         </div>
 

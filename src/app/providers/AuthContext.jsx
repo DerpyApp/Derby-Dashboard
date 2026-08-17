@@ -51,7 +51,7 @@ export function AuthProvider({ children }) {
   // Rehydrate from localStorage on mount
   useEffect(() => {
     const token = tokenService.getToken();
-    const user  = tokenService.getUser();
+    const user = tokenService.getUser();
     dispatch({ type: 'INIT', payload: { token, user } });
   }, []);
 

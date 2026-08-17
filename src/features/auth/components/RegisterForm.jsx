@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 import { registerSchema } from '@features/auth/schemas/authSchemas';
-import { registerUser }   from '@features/auth/api/authApi';
-import { ROUTES }         from '@config/constants';
+import { registerUser } from '@features/auth/api/authApi';
+import { ROUTES } from '@config/constants';
 
 import Input from '@components/ui/Input/Input';
 import Modal from '@components/ui/Modal/Modal';
@@ -136,7 +136,7 @@ export default function RegisterForm() {
               <button
                 type="button"
                 id="register-toggle-password"
-                onClick={() => setShowPassword(v => !v)}
+                onClick={() => setShowPassword((v) => !v)}
                 className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >

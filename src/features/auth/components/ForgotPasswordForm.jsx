@@ -7,8 +7,8 @@ import { Mail, ArrowLeft } from 'lucide-react';
 import forgotIcon from '@assets/forgot-icon.png';
 
 import { forgotPasswordSchema } from '@features/auth/schemas/authSchemas';
-import { sendOTP }              from '@features/auth/api/authApi';
-import { ROUTES }               from '@config/constants';
+import { sendOTP } from '@features/auth/api/authApi';
+import { ROUTES } from '@config/constants';
 
 // ─────────────────────────────────────────────────────────────
 //  ForgotPasswordForm — matches reference image exactly
@@ -18,7 +18,7 @@ import { ROUTES }               from '@config/constants';
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
-  const [isLoading,   setIsLoading]   = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,

@@ -44,11 +44,6 @@ apiClient.interceptors.response.use(
       }
     }
 
-    if (response?.status === 403) {
-      // User is authenticated but lacks permission
-      console.warn('[Derpy] 403 Forbidden:', response.config?.url);
-    }
-
     // Normalize error shape for consistent handling in features
     const normalizedError = {
       status: response?.status,

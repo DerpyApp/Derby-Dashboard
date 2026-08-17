@@ -5,21 +5,21 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { User, Lock, Eye, EyeOff } from 'lucide-react';
 
 import { loginSchema } from '@features/auth/schemas/authSchemas';
-import { loginUser }   from '@features/auth/api/authApi';
-import { useAuth }     from '@features/auth/hooks/useAuth';
-import { ROUTES }      from '@config/constants';
+import { loginUser } from '@features/auth/api/authApi';
+import { useAuth } from '@features/auth/hooks/useAuth';
+import { ROUTES } from '@config/constants';
 
 import Input from '@components/ui/Input/Input';
 
 export default function LoginForm() {
   const { login } = useAuth();
-  const navigate  = useNavigate();
-  const location  = useLocation();
-  const from      = location.state?.from?.pathname || ROUTES.DASHBOARD;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || ROUTES.DASHBOARD;
 
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError,  setServerError]  = useState('');
-  const [isLoading,    setIsLoading]    = useState(false);
+  const [serverError, setServerError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(loginSchema),
@@ -182,4 +182,3 @@ export default function LoginForm() {
     </div>
   );
 }
-

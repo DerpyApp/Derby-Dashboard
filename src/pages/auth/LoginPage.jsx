@@ -1,7 +1,7 @@
 import AuthLayout from '@components/layout/AuthLayout/AuthLayout';
-import LoginForm  from '@features/auth/components/LoginForm';
+import LoginForm from '@features/auth/components/LoginForm';
 import photoLogin from '@assets/photo-login.jpg';
-import logo      from '@assets/logo.png';
+import logo from '@assets/logo.png';
 
 // ── Login-specific hero logo overlay (img tag, top-left of hero card) ──
 function LoginHeroLogo() {
@@ -35,5 +35,3 @@ export default function LoginPage() {
     </AuthLayout>
   );
 }
-
-

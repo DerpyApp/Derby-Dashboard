@@ -5,16 +5,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 
 import { resetPasswordSchema } from '@features/auth/schemas/authSchemas';
-import { resetPassword }       from '@features/auth/api/authApi';
-import { ROUTES }              from '@config/constants';
+import { resetPassword } from '@features/auth/api/authApi';
+import { ROUTES } from '@config/constants';
 
-import Input  from '@components/ui/Input/Input';
+import Input from '@components/ui/Input/Input';
 import Button from '@components/ui/Button/Button';
-import Modal  from '@components/ui/Modal/Modal';
+import Modal from '@components/ui/Modal/Modal';
 
 function getStrength(password = '') {
   let score = 0;
-  if (password.length >= 8)           score++;
+  if (password.length >= 8) score++;
   if (/[A-Z]/.test(password))        score++;
   if (/[a-z]/.test(password))        score++;
   if (/[0-9]/.test(password))        score++;
@@ -49,15 +49,15 @@ function PasswordStrengthMeter({ password }) {
 }
 
 export default function ResetPasswordForm() {
-  const navigate   = useNavigate();
-  const location   = useLocation();
-  const email      = location.state?.email      || '';
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email || '';
   const resetToken = location.state?.resetToken || '';
 
-  const [showNew,      setShowNew]      = useState(false);
-  const [showConfirm,  setShowConfirm]  = useState(false);
-  const [serverError,  setServerError]  = useState('');
-  const [isLoading,    setIsLoading]    = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [serverError, setServerError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
 
   const {
@@ -155,6 +155,27 @@ export default function ResetPasswordForm() {
             errorText={errors.confirmPassword?.message}
             {...register('confirmPassword')}
           />
+
+          {/* Password Requirements Card */}
+          <div className="bg-[#1c222b] border border-[#263230] rounded-xl p-4 text-left space-y-2.5">
+            <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+              PASSWORD REQUIREMENTS
+            </p>
+            <ul className="space-y-1.5">
+              {[
+                'At least 8 characters',
+                'One uppercase letter (A–Z)',
+                'One lowercase letter (a–z)',
+                'One number (0–9)',
+                'One special character (!@#$%...)',
+              ].map((rule) => (
+                <li key={rule} className="flex items-center gap-2 text-xs text-gray-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C8F13A] shrink-0" />
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <Button
             id="reset-submit-btn"

@@ -3,11 +3,11 @@ import { ROUTES } from '@config/constants';
 import ProtectedRoute from './ProtectedRoute';
 
 // ── Page imports ─────────────────────────────────────────────
-import LoginPage          from '@pages/auth/LoginPage';
-import RegisterPage       from '@pages/auth/RegisterPage';
+import LoginPage from '@pages/auth/LoginPage';
+import RegisterPage from '@pages/auth/RegisterPage';
 import ForgotPasswordPage from '@pages/auth/ForgotPasswordPage';
-import OTPPage            from '@pages/auth/OTPPage';
-import ResetPasswordPage  from '@pages/auth/ResetPasswordPage';
+import OTPPage from '@pages/OtpPage';
+import ResetPasswordPage from '@pages/auth/ResetPasswordPage';
 
 // Placeholder dashboard (replace with real feature page)
 function DashboardPage() {
@@ -26,11 +26,11 @@ export default function AppRoutes() {
   return (
     <Routes>
       {/* Public Auth Routes */}
-      <Route path={ROUTES.LOGIN}            element={<LoginPage />} />
-      <Route path={ROUTES.REGISTER}         element={<RegisterPage />} />
-      <Route path={ROUTES.FORGOT_PASSWORD}  element={<ForgotPasswordPage />} />
-      <Route path={ROUTES.OTP}              element={<OTPPage />} />
-      <Route path={ROUTES.RESET_PASSWORD}   element={<ResetPasswordPage />} />
+      <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+      <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+      <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
+      <Route path={ROUTES.OTP} element={<OTPPage />} />
+      <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
 
       {/* Protected Routes */}
       <Route
@@ -44,7 +44,7 @@ export default function AppRoutes() {
 
       {/* Fallback */}
       <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.LOGIN} replace />} />
-      <Route path="*"           element={<Navigate to={ROUTES.LOGIN} replace />} />
+      <Route path="*" element={<Navigate to={ROUTES.LOGIN} replace />} />
     </Routes>
   );
 }

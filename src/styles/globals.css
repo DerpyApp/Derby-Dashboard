@@ -1,0 +1,182 @@
+/* ─────────────────────────────────────────────────────────────
+   Derpy Global Styles — Figma Design System
+   Tailwind directives + custom design tokens + base resets
+───────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties (Figma Design Tokens) ─────────── */
+:root {
+  /* Brand Palette */
+  --color-bg:        #040B1A; /* Dark Navy / Black Background     */
+  --color-primary:   #C8F13A; /* Neon Lime — Primary CTAs & Logo  */
+  --color-secondary: #AED125; /* Olive Lime                       */
+  --color-surface:   #263230; /* Muted Card Surface               */
+  --color-accent:    #16436D; /* Dark Sport Blue                  */
+  --color-light:     #FAFBFA; /* Off-White / High Contrast Text   */
+  --color-muted:     #D4D8D3; /* Muted Gray / Borders             */
+
+  /* Semantic aliases */
+  --color-text:        var(--color-light);
+  --color-text-muted:  var(--color-muted);
+  --color-error:       #EF4444;
+  --color-success:     var(--color-primary);
+  --color-warning:     #F59E0B;
+
+  /* Spacing & Shape */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-brand:  0 0 30px rgba(200, 241, 58, 0.2);
+  --shadow-glass:  0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-accent: 0 0 30px rgba(22, 67, 109, 0.4);
+
+  /* Transitions */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Base Reset ──────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #040B1A;
+    color: #FAFBFA;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  /* ── Custom Scrollbar ──────────────────────────────────── */
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #040B1A; }
+  ::-webkit-scrollbar-thumb { background: #263230; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #C8F13A; }
+
+  /* ── Remove yellow autofill tint ──────────────────────── */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #263230 inset !important;
+    -webkit-text-fill-color: #FAFBFA !important;
+    caret-color: #FAFBFA;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+/* ── Component Utilities ─────────────────────────────────── */
+@layer components {
+  /* Glassmorphism card */
+  .glass-card {
+    background-color: rgba(38, 50, 48, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 216, 211, 0.12);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Neon lime gradient text */
+  .gradient-text {
+    background: linear-gradient(90deg, #C8F13A, #AED125);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hero animated mesh — uses brand palette */
+  .hero-mesh {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(22, 67, 109, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(200, 241, 58, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(22, 67, 109, 0.2) 0%, transparent 50%),
+      #040B1A;
+  }
+
+  /* Input base */
+  .input-base {
+    width: 100%;
+    background-color: #181d24;
+    border: 1px solid #2b323d;
+    border-radius: var(--radius-lg);
+    padding: 0.75rem 1rem;
+    color: #FAFBFA;
+    transition: all var(--transition-normal);
+  }
+  .input-base::placeholder { color: #9ca3af; opacity: 0.85; }
+  .input-base:focus {
+    outline: none;
+    border-color: #C8F13A;
+    box-shadow: 0 0 0 2px rgba(200, 241, 58, 0.2);
+  }
+
+  .input-error {
+    border-color: #EF4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+  }
+
+  /* OTP digit input */
+  .otp-input {
+    width: 3rem;
+    height: 3.5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    background-color: #040B1A;
+    border: 2px solid #263230;
+    border-radius: var(--radius-lg);
+    color: #FAFBFA;
+    caret-color: #C8F13A;
+    transition: all var(--transition-normal);
+  }
+  .otp-input:focus {
+    outline: none;
+    border-color: #C8F13A;
+    box-shadow: 0 0 0 2px rgba(200, 241, 58, 0.2);
+  }
+  .otp-input.filled {
+    border-color: #C8F13A;
+    background-color: rgba(200, 241, 58, 0.08);
+  }
+}
+
+/* ── Utility Overrides ───────────────────────────────────── */
+@layer utilities {
+  .animate-in {
+    animation: fadeIn 0.4s ease-out, slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

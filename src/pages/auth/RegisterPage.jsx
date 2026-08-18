@@ -1,8 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
+import { ROUTES } from '@config/constants';
 import RegisterForm from '../../features/auth/components/RegisterForm';
 
 export default function RegisterPage() {
-  const handleRegisterSubmit = (data) => {
-    // Proceed to Step 2
+  const navigate = useNavigate();
+
+  const handleRegisterSubmit = (formData) => {
+    void formData;
+    navigate(ROUTES.WELCOME);
   };
 
   return (

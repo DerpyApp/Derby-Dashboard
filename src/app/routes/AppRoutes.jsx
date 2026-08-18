@@ -5,6 +5,7 @@ import ProtectedRoute from './ProtectedRoute';
 // ── Page imports ─────────────────────────────────────────────
 import LoginPage from '@pages/auth/LoginPage';
 import RegisterPage from '@pages/auth/RegisterPage';
+import WelcomePage from '@pages/auth/Welcome';
 import ForgotPasswordPage from '@pages/auth/ForgotPasswordPage';
 import OTPPage from '@pages/OtpPage';
 import ResetPasswordPage from '@pages/auth/ResetPasswordPage';
@@ -28,6 +29,7 @@ export default function AppRoutes() {
       {/* Public Auth Routes */}
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+      <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
       <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
       <Route path={ROUTES.OTP} element={<OTPPage />} />
       <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />

@@ -4,6 +4,7 @@ import registerPhoto from '../../../assets/photo-register.jpg';
 import speedometerIcon from '../../../assets/speedometer.png';
 import { ContactDetailsStep } from './ContactDetailsStep';
 import { CreatePasswordStep } from './CreatePasswordStep';
+import { CompleteProfileStep } from './CompleteProfileStep';
 
 export default function RegisterForm({ onSubmit }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,6 +22,11 @@ export default function RegisterForm({ onSubmit }) {
     // Step 3
     password: '',
     confirmPassword: '',
+    // Step 4
+    position: 'Defender',
+    skillLevel: 3,
+    city: 'Cairo',
+    favoriteSports: ['football'],
   });
 
   const handleChange = (e) => {
@@ -35,6 +41,11 @@ export default function RegisterForm({ onSubmit }) {
   const handleNextStep = (e) => {
     if (e) e.preventDefault();
     setCurrentStep((prev) => prev + 1);
+  };
+
+  const handleFinalSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (onSubmit) onSubmit(formData);
   };
 
   return (
@@ -107,6 +118,10 @@ export default function RegisterForm({ onSubmit }) {
 
         {currentStep === 3 && (
           <CreatePasswordStep formData={formData} onChange={handleChange} onNext={handleNextStep} />
+        )}
+
+        {currentStep === 4 && (
+          <CompleteProfileStep formData={formData} setFormData={setFormData} onSubmit={handleFinalSubmit} />
         )}
       </div>
     </div>

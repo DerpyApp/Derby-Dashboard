@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { UserCheck, Zap, TrendingUp, MapPin, Flag, Search, ArrowRight } from 'lucide-react';
 
 export const CompleteProfileStep = ({ formData, setFormData, onSubmit }) => {

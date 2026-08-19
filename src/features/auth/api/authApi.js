@@ -1,10 +1,10 @@
 import apiClient from '@config/axios';
 import { API_ENDPOINTS } from '@config/constants';
 
-// 💡 غير المتغير ده لـ false أول ما الـ Backend يجهز ويبدأ يشتغل
+// Toggle mock responses while backend integration is unavailable.
 const USE_MOCK_API = true;
 
-// دالة مساعدة لمحاكاة تأخير الـ Network (800ms)
+// Simulates network latency for mock API responses.
 const mockDelay = (data) =>
   new Promise((resolve) => setTimeout(() => resolve(data), 800));
 

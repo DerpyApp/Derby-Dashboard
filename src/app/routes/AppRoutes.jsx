@@ -9,6 +9,7 @@ import WelcomePage from '@pages/auth/Welcome';
 import ForgotPasswordPage from '@pages/auth/ForgotPasswordPage';
 import OTPPage from '@pages/OtpPage';
 import ResetPasswordPage from '@pages/auth/ResetPasswordPage';
+import LegalPage from '@pages/auth/LegalPage';
 
 // Placeholder dashboard (replace with real feature page)
 function DashboardPage() {
@@ -33,6 +34,7 @@ export default function AppRoutes() {
       <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
       <Route path={ROUTES.OTP} element={<OTPPage />} />
       <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
+      <Route path="/legal" element={<LegalPage />} />
 
       {/* Protected Routes */}
       <Route

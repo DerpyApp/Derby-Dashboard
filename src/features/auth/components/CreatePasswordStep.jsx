@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 export const CreatePasswordStep = ({ formData, onChange, onNext }) => {

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { verifyOTP, sendOTP } from '@features/auth/api/authApi';
 import { ROUTES } from '@config/constants';
 
-// 💡 وضع المحاكاة: خليه true للمعاينة والتطوير بدون Backend، وخليه false لما الـ API يجهز
+// Toggle the mock OTP flow while backend integration is unavailable.
 const ENABLE_MOCK_MODE = true;
 
 export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {

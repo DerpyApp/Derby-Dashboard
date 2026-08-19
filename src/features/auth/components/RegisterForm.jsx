@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { User, Calendar, ArrowRight } from 'lucide-react';
 import registerPhoto from '../../../assets/photo-register.jpg';
 import speedometerIcon from '../../../assets/speedometer.png';
@@ -16,6 +17,7 @@ export default function RegisterForm({ onSubmit }) {
     userName: '',
     dateOfBirth: '',
     gender: 'Male',
+    agreedToTerms: false,
     // Step 2
     phoneNumber: '',
     email: '',
@@ -104,6 +106,27 @@ export default function RegisterForm({ onSubmit }) {
                 <button type="button" onClick={() => handleGenderSelect('Male')} className={`rounded-lg py-1.5 text-xs font-semibold ${formData.gender === 'Male' ? 'bg-[#C8F13A] text-black' : 'text-gray-400'}`}>Male</button>
                 <button type="button" onClick={() => handleGenderSelect('Female')} className={`rounded-lg py-1.5 text-xs font-semibold ${formData.gender === 'Female' ? 'bg-[#C8F13A] text-black' : 'text-gray-400'}`}>Female</button>
               </div>
+              <label className="flex items-start gap-2 rounded-xl border border-white/10 bg-[#1a1d24] px-3 py-2 text-xs leading-relaxed text-gray-300">
+                <input
+                  type="checkbox"
+                  name="agreedToTerms"
+                  checked={formData.agreedToTerms}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, agreedToTerms: e.target.checked }))}
+                  required
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-white/20 bg-[#1a1d24] text-[#C8F13A] accent-[#C8F13A] focus:ring-[#C8F13A]"
+                />
+                <span>
+                  I agree to the{' '}
+                  <Link to="/legal?tab=terms" className="text-[#C8F13A] hover:underline">
+                    Terms of Service
+                  </Link>{' '}
+                  and{' '}
+                  <Link to="/legal?tab=privacy" className="text-[#C8F13A] hover:underline">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+              </label>
               <button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C8F13A] py-2.5 text-xs font-semibold text-black">
                 <span>Continue</span>
                 <ArrowRight className="h-3.5 w-3.5" />

@@ -1,0 +1,43 @@
+.section {
+  padding: 4rem 0;
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--derby-text);
+}
+
+.card {
+  background-color: var(--derby-bg-alt);
+  border: 1px solid var(--derby-border);
+  border-radius: 12px;
+  padding: 2.2rem 1.5rem;
+  text-align: center;
+  height: 100%;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--derby-green-dim);
+  color: var(--derby-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.1rem;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.text {
+  color: var(--derby-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}

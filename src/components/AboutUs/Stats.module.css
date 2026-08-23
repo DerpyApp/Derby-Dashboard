@@ -1,0 +1,28 @@
+.section {
+  padding: 1.5rem 0 4rem;
+}
+
+.bar {
+  background: linear-gradient(
+    90deg,
+    rgba(182, 255, 26, 0.06),
+    rgba(182, 255, 26, 0.01)
+  );
+  border: 1px solid var(--derby-border);
+  border-radius: 14px;
+  padding: 2.5rem 1rem;
+}
+
+.value {
+  color: var(--derby-green);
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.label {
+  color: var(--derby-text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}

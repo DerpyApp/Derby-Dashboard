@@ -1,0 +1,177 @@
+.content {
+  padding-bottom: 4rem;
+}
+
+.orderRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.orderImageWrap {
+  width: 78px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1a1c14, #10130c);
+}
+
+.orderImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.orderVenue {
+  color: var(--derby-green);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.orderMeta {
+  color: var(--derby-text-muted);
+  font-size: 0.82rem;
+}
+
+.orderGrid {
+  border-top: 1px solid var(--derby-border);
+  padding-top: 1.2rem;
+}
+
+.preparingText {
+  color: var(--derby-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+.pixelContainer {
+  min-height: 40px;
+}
+
+.failureBanner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  background-color: rgba(255, 92, 92, 0.1);
+  border: 1px solid rgba(255, 92, 92, 0.35);
+  color: #ff8080;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+.retryBtn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid #ff8080;
+  color: #ff8080;
+  border-radius: 6px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Summary card */
+.summaryCard {
+  background-color: var(--derby-bg-alt);
+  border: 1px solid var(--derby-border);
+  border-radius: 14px;
+  padding: 1.6rem;
+}
+
+.summaryTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  color: var(--derby-text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.7rem;
+}
+
+.discountRow {
+  color: var(--derby-green);
+}
+
+.promoRow {
+  display: flex;
+  gap: 0.6rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.promoInput {
+  background-color: var(--derby-bg) !important;
+  border: 1px solid var(--derby-border) !important;
+  color: var(--derby-text) !important;
+  border-radius: 8px !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.04em;
+}
+
+.promoInput::placeholder {
+  color: #6b6e64;
+}
+
+.promoNote {
+  color: var(--derby-text-muted);
+  font-size: 0.72rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
+.divider {
+  border-top: 1px solid var(--derby-border);
+  margin: 1rem 0 1rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.4rem;
+}
+
+.totalLabel {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.totalNote {
+  color: var(--derby-text-muted);
+  font-size: 0.72rem;
+  text-align: right;
+}
+
+.totalValue {
+  color: var(--derby-green);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.payBtn {
+  width: 100%;
+}
+
+.secureNote {
+  text-align: center;
+  color: var(--derby-text-muted);
+  font-size: 0.75rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}

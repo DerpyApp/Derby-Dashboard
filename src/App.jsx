@@ -1,4 +1,11 @@
 import AppRoutes from '@app/routes/AppRoutes';
+import React from "react";
+import PaymentPage from "./components/Payment/PaymentPage/PaymentPage";
+
+import React from "react";
+import AboutUs from "./components/AboutUs";
+
+  
 
 // ─────────────────────────────────────────────────────────────
 //  App — Top-level routing container
@@ -6,4 +13,6 @@ import AppRoutes from '@app/routes/AppRoutes';
 // ─────────────────────────────────────────────────────────────
 export default function App() {
   return <AppRoutes />;
+   return <PaymentPage />;
+    return <AboutUs />;
 }

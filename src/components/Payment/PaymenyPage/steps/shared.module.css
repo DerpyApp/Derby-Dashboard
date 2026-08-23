@@ -1,0 +1,140 @@
+.card {
+  background-color: var(--derby-bg-alt);
+  border: 1px solid var(--derby-border);
+  border-radius: 14px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.cardTitleIcon {
+  color: var(--derby-green);
+}
+
+.label {
+  color: var(--derby-text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--derby-text-muted);
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+.input {
+  background-color: var(--derby-bg) !important;
+  border: 1px solid var(--derby-border) !important;
+  color: var(--derby-text) !important;
+  border-radius: 8px !important;
+  padding: 0.6rem 1rem 0.6rem 2.3rem !important;
+  font-size: 0.9rem;
+}
+
+.input::placeholder {
+  color: #6b6e64;
+}
+
+.input:focus {
+  border-color: var(--derby-green) !important;
+  box-shadow: 0 0 0 1px var(--derby-green) !important;
+}
+
+.inputInvalid {
+  border-color: #ff5c5c !important;
+}
+
+.inputInvalid:focus {
+  box-shadow: 0 0 0 1px #ff5c5c !important;
+}
+
+.errorText {
+  color: #ff8080;
+  font-size: 0.76rem;
+  margin-top: 0.35rem;
+}
+
+.gridLabel {
+  color: var(--derby-text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.gridValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.checkbox {
+  color: var(--derby-text-muted);
+  font-size: 0.85rem;
+}
+
+/* Buttons */
+.btnPrimary {
+  background-color: var(--derby-green) !important;
+  border: none !important;
+  color: #0e0f0c !important;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.8rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnGhost {
+  background: transparent !important;
+  border: 1px solid var(--derby-border) !important;
+  color: var(--derby-text) !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.8rem 1.4rem;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.btnGhost:hover:not(:disabled) {
+  border-color: var(--derby-green) !important;
+  color: var(--derby-green) !important;
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}

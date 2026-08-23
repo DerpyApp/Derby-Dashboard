@@ -1,0 +1,101 @@
+.content {
+  padding-bottom: 4rem;
+}
+
+.subtitle {
+  color: var(--derby-text-muted);
+  font-size: 0.85rem;
+  margin-top: -0.7rem;
+  margin-bottom: 1.4rem;
+}
+
+.continueBtn {
+  width: 100%;
+}
+
+.summaryCard {
+  background-color: var(--derby-bg-alt);
+  border: 1px solid var(--derby-border);
+  border-radius: 14px;
+  padding: 1.4rem;
+}
+
+.imageWrap {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1c14, #10130c);
+  margin-bottom: 1rem;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.venueName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.venueMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--derby-text-muted);
+  font-size: 0.82rem;
+  margin-bottom: 0.7rem;
+}
+
+.sportBadge {
+  display: inline-block;
+  background-color: var(--derby-green-dim);
+  color: var(--derby-green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 1.2rem;
+}
+
+.scheduleGrid {
+  border-top: 1px solid var(--derby-border);
+  padding-top: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.divider {
+  border-top: 1px solid var(--derby-border);
+  margin: 1rem 0;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  color: var(--derby-text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalLabel {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.totalValue {
+  color: var(--derby-green);
+  font-size: 1.4rem;
+  font-weight: 800;
+}

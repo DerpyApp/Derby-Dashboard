@@ -1,0 +1,14 @@
+:root {
+  --derby-bg: #0e0f0c;
+  --derby-bg-alt: #131410;
+  --derby-green: #b6ff1a;
+  --derby-green-dim: rgba(182, 255, 26, 0.15);
+  --derby-text: #f5f5f2;
+  --derby-text-muted: #a9aca3;
+  --derby-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  background-color: var(--derby-bg);
+  font-family: "Poppins", "Inter", system-ui, sans-serif;
+}

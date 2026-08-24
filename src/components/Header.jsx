@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import ViewToggle from './ViewToggle';
+import SearchFilters from './SearchFilters';
 
-export default function Header({ onViewChange }) {
+export default function Header({ onViewChange, onSearch, onFilterChange }) {
   return (
     <header className="bg-slate-950 border-b border-yellow-400">
       {/* Top Navigation */}
@@ -44,43 +45,16 @@ export default function Header({ onViewChange }) {
         </p>
 
         {/* Filters and Search */}
-        <div className="flex flex-col md:flex-row gap-4 items-center">
-          {/* Filters */}
-          <div className="flex gap-3 flex-wrap">
-            <button className="border border-gray-600 text-gray-300 px-4 py-2 rounded hover:border-yellow-400 transition-colors text-sm">
-              All Cities
-            </button>
-            <button className="border border-gray-600 text-gray-300 px-4 py-2 rounded hover:border-yellow-400 transition-colors text-sm">
-              All Sports
-            </button>
-            <button className="border border-gray-600 text-gray-300 px-4 py-2 rounded hover:border-yellow-400 transition-colors text-sm">
-              All Prices
-            </button>
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          {/* Search Filters Component */}
+          <div className="w-full md:flex-1">
+            <SearchFilters onSearch={onSearch} onFilterChange={onFilterChange} />
           </div>
 
           {/* View Toggle */}
-          <div className="ml-auto">
+          <div>
             <ViewToggle onViewChange={onViewChange} />
           </div>
-        </div>
-
-        {/* Search Bar */}
-        <div className="mt-6">
-          <input
-            type="text"
-            placeholder="Search venues by name..."
-            className="w-full bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded focus:border-yellow-400 focus:outline-none transition-colors placeholder-gray-500"
-          />
-        </div>
-
-        {/* Tags */}
-        <div className="flex gap-2 mt-4">
-          <span className="inline-block bg-slate-800 text-gray-300 px-3 py-1 rounded text-sm">
-            Explore ✕
-          </span>
-          <span className="inline-block bg-slate-800 text-gray-300 px-3 py-1 rounded text-sm">
-            Football ✕
-          </span>
         </div>
       </div>
     </header>

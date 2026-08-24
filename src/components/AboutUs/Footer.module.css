@@ -1,0 +1,57 @@
+.footer {
+  border-top: 1px solid var(--derby-border);
+  padding: 2rem 0;
+  font-size: 0.82rem;
+  color: var(--derby-text-muted);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--derby-text);
+  font-weight: 600;
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--derby-green);
+  color: #0e0f0c;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.links a {
+  color: var(--derby-text-muted);
+  text-decoration: none;
+}
+
+.links a:hover {
+  color: var(--derby-green);
+}
+
+.copy {
+  text-align: right;
+}
+
+@media (max-width: 991px) {
+  .copy {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

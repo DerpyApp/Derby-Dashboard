@@ -1,0 +1,795 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #080b0e;
+  font-family: Arial, sans-serif;
+}
+
+.details-page {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 2409.58px;
+
+  margin: 0 auto;
+
+  background: #080b0e;
+  color: #f5f5f5;
+
+  padding-bottom: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ================= HEADER ================= */
+
+.details-header {
+  height: 72px;
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #11161c;
+  border-bottom: 1px solid #26313a;
+}
+
+.details-logo {
+  width: 120px;
+  object-fit: contain;
+}
+
+.details-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.details-nav button {
+  border: none;
+  background: transparent;
+
+  color: #aeb5bc;
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.details-nav button:hover {
+  color: #c7ff00;
+}
+
+.details-nav .active {
+  color: #c7ff00;
+}
+
+/* ================= AUTH BUTTONS ================= */
+
+.details-auth {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.details-auth button {
+  border: none;
+  background: transparent;
+
+  color: #aeb5bc;
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.details-auth .signin:hover {
+  color: #c7ff00;
+}
+
+.details-auth .signup {
+  background: #c7ff00;
+  color: #111;
+
+  padding: 10px 20px;
+
+  border-radius: 8px;
+
+  font-weight: bold;
+
+  box-shadow: 0 0 14px rgba(199, 255, 0, 0.25);
+}
+
+/* ================= HERO ================= */
+
+.details-hero {
+  width: 100%;
+  max-width: 1280px;
+
+  height: 716px;
+  min-height: 716px;
+
+  position: relative;
+
+  margin: 0 auto;
+
+  background-size: cover;
+  background-position: center;
+
+  border-bottom: 1px solid #26313a;
+}
+
+/* ================= MAIN ================= */
+
+.details-main {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 34px 24px 70px;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 320px;
+
+  gap: 20px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+/* ================= CARDS ================= */
+
+.details-card {
+  background: #181d22;
+
+  border: 1px solid #354039;
+
+  border-radius: 9px;
+
+  padding: 22px;
+}
+
+.details-card h2 {
+  margin: 0 0 15px;
+
+  font-size: 21px;
+}
+
+.details-card p {
+  color: #aeb5bc;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  margin: 0 0 10px;
+}
+
+/* ================= CLUB OVERVIEW ================= */
+
+.overview-card {
+  width: 814.66px;
+  height: 257.6px;
+
+  padding: 23px 24px 24px 24px;
+
+  gap: 10.8px;
+
+  border-radius: 12px;
+  border: 1px solid #354039;
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 1;
+}
+
+.overview-card h2 {
+  width: 764.66px;
+  height: 32px;
+
+  margin: 0;
+
+  flex-shrink: 0;
+}
+
+.overview-card p {
+  width: 764.66px;
+
+  margin: 0;
+
+  overflow: hidden;
+}
+
+.overview-card p:first-of-type {
+  height: 103px;
+}
+
+.overview-card p:last-of-type {
+  height: 52px;
+}
+
+/* ================= FACILITIES ================= */
+
+.facilities-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+}
+
+.facility-item {
+  min-height: 72px;
+
+  border: 1px solid #303a34;
+
+  background: #11161b;
+
+  border-radius: 7px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+}
+
+.facility-item img {
+  width: 22px;
+  height: 22px;
+
+  object-fit: contain;
+}
+
+.facility-item span {
+  font-size: 10px;
+  color: #b7bdc3;
+}
+
+/* ================= COURTS ================= */
+
+.available-title,
+.gallery-title {
+  margin: 8px 0 15px;
+
+  font-size: 22px;
+}
+
+.courts-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.court-card {
+  display: grid;
+
+  grid-template-columns: 260.2px 1fr;
+
+  gap: 18px;
+
+  background: #181d22;
+
+  border: 1px solid #354039;
+
+  border-radius: 9px;
+
+  padding: 12px;
+}
+
+.court-image {
+  width: 260.2px;
+  height: 192px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+}
+
+.court-info {
+  position: relative;
+}
+
+.court-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.court-info h3 {
+  margin: 0 0 8px;
+
+  font-size: 17px;
+}
+
+.court-tag {
+  background: #343b40;
+
+  color: #c5cbd0;
+
+  padding: 5px 9px;
+
+  border-radius: 3px;
+
+  font-size: 9px;
+
+  white-space: nowrap;
+}
+
+.court-description {
+  color: #9ea6ad;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  margin: 0;
+}
+
+.prices {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.price-box {
+  border: 1px solid #344036;
+
+  background: #12171c;
+
+  border-radius: 6px;
+
+  padding: 10px;
+}
+
+.price-box span {
+  display: block;
+
+  font-size: 9px;
+  color: #8d969e;
+
+  margin-bottom: 6px;
+}
+
+.price-box strong {
+  color: #c7ff00;
+  font-size: 14px;
+}
+
+.book-button {
+  float: right;
+
+  margin-top: 14px;
+
+  border: none;
+
+  background: #c7ff00;
+  color: #111;
+
+  padding: 10px 24px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* ================= MAP ================= */
+
+.map-card {
+  padding: 0;
+
+  overflow: hidden;
+}
+
+.map-image {
+  width: 395.33px;
+  height: 256px;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.location-content {
+  padding: 20px;
+}
+
+.location-buttons {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+.location-buttons button {
+  width: 100%;
+
+  background: #11161b;
+
+  border: 1px solid #354039;
+
+  color: #c7cdd2;
+
+  padding: 11px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+/* ================= HOURS ================= */
+
+.hours-card h2 {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.hours-icon {
+  display: flex;
+  align-items: center;
+}
+
+.hours-icon img {
+  width: 18px;
+  height: 18px;
+
+  object-fit: contain;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #2a3239;
+
+  color: #aeb5bc;
+
+  font-size: 12px;
+}
+
+.hours-row:last-child {
+  border-bottom: none;
+}
+
+/* ================= GALLERY ================= */
+
+.gallery {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+.gallery img {
+  width: 260.88px;
+  height: 260.88px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+  border: 1px solid #354039;
+}
+
+/* ================= FOOTER ================= */
+
+.details-footer {
+  border-top: 1px solid #222a31;
+
+  padding: 25px 32px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #c3caac;
+
+  font-size: 10px;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.footer-logo {
+  width: 120px;
+
+  object-fit: contain;
+}
+
+.details-footer p {
+  width: 410px;
+  height: 26px;
+
+  margin: 0;
+
+  color: #c3caac;
+
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 25.6px;
+  letter-spacing: 0;
+
+  vertical-align: middle;
+}
+
+/* ================= FOOTER LINKS ================= */
+
+.footer-links {
+  width: 658.87px;
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+}
+
+.footer-privacy {
+  width: 117.61px;
+  height: 12px;
+
+  opacity: 0.8;
+
+  color: #c3caac;
+
+  font-family:
+    JetBrains Mono,
+    monospace;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.footer-terms {
+  width: 134.41px;
+  height: 12px;
+
+  opacity: 1;
+
+  color: #c3caac;
+
+  font-family:
+    JetBrains Mono,
+    monospace;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.footer-contact {
+  width: 126.02px;
+  height: 12px;
+
+  opacity: 0.8;
+
+  color: #c3caac;
+
+  font-family:
+    JetBrains Mono,
+    monospace;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.footer-partner {
+  width: 126.02px;
+  height: 12px;
+
+  opacity: 1;
+
+  color: #c3caac;
+
+  font-family:
+    JetBrains Mono,
+    monospace;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.footer-careers {
+  width: 58.81px;
+  height: 12px;
+
+  opacity: 1;
+
+  color: #c3caac;
+
+  font-family:
+    JetBrains Mono,
+    monospace;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .details-main {
+    grid-template-columns: 1fr;
+  }
+
+  .details-header {
+    padding: 0 18px;
+  }
+
+  .details-nav {
+    display: none;
+  }
+
+  .facilities-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .details-hero {
+    height: 550px;
+    min-height: 550px;
+  }
+
+  .overview-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .overview-card h2,
+  .overview-card p,
+  .overview-card p:first-of-type,
+  .overview-card p:last-of-type {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .map-image {
+    width: 100%;
+  }
+
+  .court-card {
+    grid-template-columns: 260.2px 1fr;
+  }
+
+  .gallery img {
+    width: 100%;
+  }
+
+  .footer-links {
+    width: 100%;
+    height: auto;
+
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 650px) {
+  .details-hero {
+    height: 430px;
+    min-height: 430px;
+  }
+
+  .details-main {
+    padding: 20px 14px 50px;
+  }
+
+  .facilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .court-card {
+    grid-template-columns: 1fr;
+  }
+
+  .court-image {
+    width: 100%;
+    height: 192px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 260.88px;
+  }
+
+  .map-image {
+    width: 100%;
+    height: 256px;
+  }
+
+  .details-footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .details-footer p {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-links {
+    width: 100%;
+    height: auto;
+
+    flex-wrap: wrap;
+  }
+
+  .details-auth {
+    gap: 18px;
+  }
+}

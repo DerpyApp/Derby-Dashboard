@@ -1,16 +1,18 @@
 .section {
-  padding: 1.5rem 0 4rem;
+  padding: 2rem 0;
+  background: var(--derby-bg);
+  border-bottom: 1px solid var(--derby-border);
 }
 
 .bar {
   background: linear-gradient(
     90deg,
-    rgba(182, 255, 26, 0.06),
-    rgba(182, 255, 26, 0.01)
+    rgba(255, 255, 255, 0.04),
+    rgba(182, 255, 26, 0.1)
   );
   border: 1px solid var(--derby-border);
-  border-radius: 14px;
-  padding: 2.5rem 1rem;
+  border-radius: 7px;
+  padding: 2.8rem 1rem;
 }
 
 .value {

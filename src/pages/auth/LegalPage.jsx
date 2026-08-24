@@ -5,9 +5,29 @@ import { TermsOfService } from '../../features/legal/components/TermsOfService';
 import { PrivacyPolicy } from '../../features/legal/components/PrivacyPolicy';
 
 export default function LegalPage() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const initialTab = searchParams.get('tab') || 'terms';
   const [activeTab, setActiveTab] = useState(initialTab);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setSearchParams({ tab });
+  };
+
+  const handleDownload = () => {
+    const title = activeTab === 'terms' ? 'Terms of Service' : 'Privacy Policy';
+    const body =
+      activeTab === 'terms'
+        ? 'Welcome to Derby Sports. These terms govern your use of our website and services.'
+        : 'Derby Sports collects and uses information to provide a premium booking experience.';
+    const blob = new Blob([`${title}\n\n${body}`], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `derby-${activeTab}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-[#0d0f12] p-6 md:p-12 text-white">
@@ -23,7 +43,11 @@ export default function LegalPage() {
             </p>
           </div>
 
-          <button className="inline-flex items-center gap-2 rounded-full border border-[#C8F13A] px-4 py-2 text-xs font-semibold text-[#C8F13A] hover:bg-[#C8F13A] hover:text-black transition-all">
+          <button
+            type="button"
+            onClick={handleDownload}
+            className="inline-flex items-center gap-2 rounded-full border border-[#C8F13A] px-4 py-2 text-xs font-semibold text-[#C8F13A] hover:bg-[#C8F13A] hover:text-black transition-all"
+          >
             <Download className="h-3.5 w-3.5" />
             <span>Download PDF</span>
           </button>
@@ -34,7 +58,8 @@ export default function LegalPage() {
           {/* Sidebar */}
           <div className="flex flex-col gap-2 md:col-span-1">
             <button
-              onClick={() => setActiveTab('terms')}
+              type="button"
+              onClick={() => handleTabChange('terms')}
               className={`rounded-xl px-4 py-3 text-sm font-semibold text-left transition-all ${
                 activeTab === 'terms'
                   ? 'bg-[#212429] text-[#C8F13A] border-l-4 border-[#C8F13A]'
@@ -45,7 +70,8 @@ export default function LegalPage() {
             </button>
 
             <button
-              onClick={() => setActiveTab('privacy')}
+              type="button"
+              onClick={() => handleTabChange('privacy')}
               className={`rounded-xl px-4 py-3 text-sm font-semibold text-left transition-all ${
                 activeTab === 'privacy'
                   ? 'bg-[#212429] text-[#C8F13A] border-l-4 border-[#C8F13A]'

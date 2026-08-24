@@ -1,18 +1,17 @@
 .hero {
   position: relative;
-  min-height: 480px;
-  margin: 1.5rem;
-  border-radius: 14px;
+  min-height: 430px;
+  margin: 0 auto;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background-image: linear-gradient(
       180deg,
-      rgba(10, 11, 9, 0.45) 0%,
-      rgba(10, 11, 9, 0.75) 100%
+      rgba(8, 10, 10, 0.55) 0%,
+      rgba(8, 10, 10, 0.86) 100%
     ),
-    url("/images/derby-stadium.jpg");
+    url("../../assets/details/Main Content.png");
   background-size: cover;
   background-position: center;
 }
@@ -20,23 +19,30 @@
 .content {
   position: relative;
   z-index: 2;
-  max-width: 640px;
+  max-width: 760px;
 }
 
 .title {
   color: var(--derby-green);
   font-weight: 800;
-  font-size: 2.75rem;
-  margin-bottom: 1rem;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  line-height: 1;
+  margin-bottom: 0.9rem;
 }
 
 .subtitle {
   color: #e4e4e0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
+  max-width: 590px;
+  margin: 0 auto;
 }
 
 @media (max-width: 991px) {
+  .hero {
+    min-height: 340px;
+  }
+
   .title {
     font-size: 2rem;
   }

@@ -60,7 +60,7 @@ body {
     text-shadow 0.2s ease;
 }
 
-/* Hover لـ Home / Pricing / Contact / About us */
+/* Navigation hover state */
 .nav button:not(.active):hover {
   color: #c0ff00;
   text-shadow: 0 0 8px rgba(192, 255, 0, 0.7);

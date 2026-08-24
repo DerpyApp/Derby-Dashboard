@@ -1,5 +1,5 @@
-import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import derbyHighfive from "../../assets/headerBack.jpg";
 import styles from "./Intro.module.css";
 
 export default function Intro() {
@@ -10,7 +10,7 @@ export default function Intro() {
           <Col lg={6}>
             <div className={styles.imageWrap}>
               <img
-                src="/images/derby-highfive.jpg"
+                src={derbyHighfive}
                 alt="Two athletes high-fiving on a padel court"
                 className={styles.image}
               />

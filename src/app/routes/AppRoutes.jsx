@@ -12,6 +12,11 @@ import OTPPage from "@pages/OtpPage";
 import ResetPasswordPage from "@pages/auth/ResetPasswordPage";
 import LegalPage from "@pages/auth/LegalPage";
 import DetailsPage from "@pages/Details/DetailsPage";
+import TournamentPage from "@pages/tournament/tournament";
+import ContactPage from "@pages/ContactPage";
+import PricingPage from "@pages/PricingPage";
+import AboutUs from "@components/AboutUs";
+import PaymentPage from "@components/Payment/PaymenyPage/steps/PaymentPage";
 
 function DashboardPage() {
   return (
@@ -29,6 +34,14 @@ export default function AppRoutes() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path={ROUTES.HOME} element={<HomePage />} />
+        <Route path="/tournament" element={<TournamentPage />} />
+        <Route path="/tournaments" element={<TournamentPage />} />
+        <Route path="/details" element={<DetailsPage />} />
+        <Route path="/details/:id" element={<DetailsPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/legal" element={<LegalPage />} />
       </Route>
 
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
@@ -37,17 +50,16 @@ export default function AppRoutes() {
       <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
       <Route path={ROUTES.OTP} element={<OTPPage />} />
       <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
-      <Route path="/legal" element={<LegalPage />} />
-      <Route path="/details" element={<DetailsPage />} />
-
       <Route
-        path={ROUTES.DASHBOARD}
+        path="/payment"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <PaymentPage />
           </ProtectedRoute>
         }
       />
+
+      <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
 
       <Route path="*" element={<Navigate to={ROUTES.LOGIN} replace />} />
     </Routes>

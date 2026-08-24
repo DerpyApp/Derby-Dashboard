@@ -1,10 +1,12 @@
+import defaultBookingImage from "../assets/details/football-court.png";
+
 // DEFAULT_BOOKING is now only a loading-state skeleton, shown for the
 // instant before the real booking loads from PadelBooking's
 // GET /api/Booking/{bookingId} (see src/api/paymentApi.js). It is never the
 // source of truth for price — that always comes from the API response.
 export const DEFAULT_BOOKING = {
   id: null,
-  image: "/images/booking-zamalek-pitch.jpg",
+  image: defaultBookingImage,
   venueName: "Loading booking…",
   location: "",
   sport: "",

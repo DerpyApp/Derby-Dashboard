@@ -1,5 +1,6 @@
 .section {
   padding: 2rem 0 5rem;
+  background: var(--derby-bg);
 }
 
 .heading {

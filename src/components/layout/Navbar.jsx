@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { ROUTES } from '@config/constants';
-import logo from '@/assets/logo.png'; // تعديل امتداد الصورة حسب المجلد لديك
+import logo from '@/assets/logo.png';
 
 const navigationLinks = [
   { label: 'Home', to: ROUTES.HOME },

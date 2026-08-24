@@ -1,9 +1,10 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faLocationDot, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const venues = [
   {
+    id: 'victory-football-club',
     name: 'Victory Football Club',
     location: 'New Cairo',
     price: '250 EGP',
@@ -11,6 +12,7 @@ const venues = [
     image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',
   },
   {
+    id: 'padel-hub-5th-settlement',
     name: 'Padel Hub 5th Settlement',
     location: '5th Settlement',
     price: '200 EGP',
@@ -18,6 +20,7 @@ const venues = [
     image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=600&q=80',
   },
   {
+    id: 'smash-padel-club',
     name: 'Smash Padel Club',
     location: 'Sheikh Zayed',
     price: '200 EGP',
@@ -25,6 +28,7 @@ const venues = [
     image: 'https://images.unsplash.com/photo-1626248801379-51a0748a5f96?auto=format&fit=crop&w=600&q=80',
   },
   {
+    id: 'goal-makers-field',
     name: 'Goal Makers Field',
     location: 'October',
     price: '180 EGP',
@@ -34,6 +38,8 @@ const venues = [
 ];
 
 export const PopularVenuesSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="w-full bg-[#121417] py-12">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
@@ -44,9 +50,13 @@ export const PopularVenuesSection = () => {
             <h2 className="text-3xl font-bold text-white tracking-tight">Popular Venues</h2>
             <p className="text-gray-400 text-sm mt-1">Discover top-rated venues in your area.</p>
           </div>
-          <a href="#" className="text-[#a8ff00] hover:underline text-xs font-semibold flex items-center gap-1 uppercase tracking-wider">
+          <button
+            type="button"
+            onClick={() => navigate('/pricing')}
+            className="text-[#a8ff00] hover:underline text-xs font-semibold flex items-center gap-1 uppercase tracking-wider"
+          >
             View all venues <FontAwesomeIcon icon={faChevronRight} className="text-[10px]" />
-          </a>
+          </button>
         </div>
 
         {/* Cards Grid */}
@@ -81,7 +91,11 @@ export const PopularVenuesSection = () => {
                       {item.price} <span className="text-xs text-gray-400 font-normal">/ hr</span>
                     </p>
                   </div>
-                  <button className="bg-[#a8ff00] text-black text-xs font-bold px-4 py-2 rounded-lg hover:bg-[#96e600] transition">
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/details/${item.id}`)}
+                    className="bg-[#a8ff00] text-black text-xs font-bold px-4 py-2 rounded-lg hover:bg-[#96e600] transition"
+                  >
                     Book
                   </button>
                 </div>

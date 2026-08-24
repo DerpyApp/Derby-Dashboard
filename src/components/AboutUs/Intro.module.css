@@ -1,10 +1,14 @@
 .section {
-  padding: 5rem 0;
+  padding: 3rem 0 3.5rem;
+  background: var(--derby-bg);
+  border-bottom: 1px solid var(--derby-border);
 }
 
 .imageWrap {
-  border-radius: 14px;
+  border-radius: 8px;
   overflow: hidden;
+  border: 1px solid var(--derby-border);
+  min-height: 285px;
 }
 
 .image {
@@ -16,7 +20,7 @@
 
 .heading {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
   color: var(--derby-text);
 }
 

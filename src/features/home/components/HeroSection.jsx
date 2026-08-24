@@ -1,8 +1,10 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import headerBack from '@/assets/headerBack.jpg';
 import headerFront from '@/assets/headerFront.jpg';
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative w-full bg-[#121417] text-white pt-12 pb-20 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -28,10 +30,18 @@ export const HeroSection = () => {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
-            <button className="bg-[#a8ff00] text-black font-bold px-7 py-3.5 rounded-full hover:bg-[#96e600] transition duration-200 text-sm">
+            <button
+              type="button"
+              onClick={() => navigate('/pricing')}
+              className="bg-[#a8ff00] text-black font-bold px-7 py-3.5 rounded-full hover:bg-[#96e600] transition duration-200 text-sm"
+            >
               Book a Court
             </button>
-            <button className="border border-gray-700 bg-gray-900/50 text-white font-medium px-7 py-3.5 rounded-full hover:border-gray-500 transition duration-200 text-sm">
+            <button
+              type="button"
+              onClick={() => navigate('/tournaments')}
+              className="border border-gray-700 bg-gray-900/50 text-white font-medium px-7 py-3.5 rounded-full hover:border-gray-500 transition duration-200 text-sm"
+            >
               Join a Match
             </button>
           </div>

@@ -1,46 +1,57 @@
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./tournament.css";
 
-import logo from "../../assets/tournament/logo.png";
 import basket from "../../assets/tournament/Basket.png";
 import football from "../../assets/tournament/football.png";
 import padel from "../../assets/tournament/padel.png";
 import topRankedIcon from "../../assets/tournament/top ranked_icon.png";
 
+const tournaments = [
+  {
+    id: "zamalek-club",
+    title: "Zamalek Club",
+    sport: "Padel",
+    status: "Upcoming",
+    image: padel,
+    prize: "50,000 EGP",
+    date: "Oct 15 - Oct 20, 2026",
+    location: "Zamalek, Cairo",
+    teams: "24/32 Teams Registered",
+  },
+  {
+    id: "cairo-football-league",
+    title: "Cairo Football League",
+    sport: "Football",
+    status: "Ongoing",
+    image: football,
+    prize: "100,000 EGP",
+    date: "Nov 1 - Dec 15, 2026",
+    location: "Multiple Venues",
+    teams: "14/16 Teams Registered",
+  },
+];
+
+const sportsFilters = ["All Sports", "Football", "Padel", "Tennis"];
+const statusFilters = ["Upcoming", "Ongoing", "Completed"];
+
 export default function Tournament() {
   const navigate = useNavigate();
+  const [selectedSport, setSelectedSport] = useState("All Sports");
+  const [selectedStatus, setSelectedStatus] = useState("Upcoming");
+
+  const filteredTournaments = useMemo(() => {
+    return tournaments.filter((tournament) => {
+      const matchesSport =
+        selectedSport === "All Sports" || tournament.sport === selectedSport;
+      const matchesStatus = tournament.status === selectedStatus;
+
+      return matchesSport && matchesStatus;
+    });
+  }, [selectedSport, selectedStatus]);
 
   return (
     <div className="tournament-page">
-      {/* HEADER */}
-      <header className="header">
-        <img src={logo} alt="Derby" className="logo" />
-
-        <nav className="nav">
-          <button onClick={() => navigate("/")}>Home</button>
-
-          <button className="active" onClick={() => navigate("/tournament")}>
-            Tournaments
-          </button>
-
-          <button onClick={() => navigate("/pricing")}>Pricing</button>
-
-          <button onClick={() => navigate("/contact")}>Contact</button>
-
-          <button onClick={() => navigate("/about")}>About us</button>
-        </nav>
-
-        <div className="header-buttons">
-          <button className="sign-in" onClick={() => navigate("/login")}>
-            Sign in
-          </button>
-
-          <button className="sign-up" onClick={() => navigate("/register")}>
-            Sign up
-          </button>
-        </div>
-      </header>
-
       <main className="main">
         {/* HERO */}
         <section className="hero" style={{ backgroundImage: `url(${basket})` }}>
@@ -55,7 +66,13 @@ export default function Tournament() {
             </p>
 
             <div className="hero-actions">
-              <button className="join-now">Join Now</button>
+              <button
+                type="button"
+                className="join-now"
+                onClick={() => navigate("/details/zamalek-club")}
+              >
+                Join Now
+              </button>
 
               <div className="countdown">⏱ 03 D 14 H 42 M</div>
             </div>
@@ -69,76 +86,67 @@ export default function Tournament() {
             {/* FILTERS */}
             <div className="filters">
               <div className="sports">
-                <button className="selected">All Sports</button>
-                <button>Football</button>
-                <button>Padel</button>
-                <button>Tennis</button>
+                {sportsFilters.map((sport) => (
+                  <button
+                    key={sport}
+                    type="button"
+                    className={selectedSport === sport ? "selected" : ""}
+                    onClick={() => setSelectedSport(sport)}
+                  >
+                    {sport}
+                  </button>
+                ))}
               </div>
 
               <div className="status">
-                <button className="selected-status">Upcoming</button>
-                <button>Ongoing</button>
-                <button>Completed</button>
+                {statusFilters.map((status) => (
+                  <button
+                    key={status}
+                    type="button"
+                    className={
+                      selectedStatus === status ? "selected-status" : ""
+                    }
+                    onClick={() => setSelectedStatus(status)}
+                  >
+                    {status}
+                  </button>
+                ))}
               </div>
             </div>
 
             {/* CARDS */}
             <div className="cards">
-              {/* ZAMALEK */}
-              <div className="tournament-card">
-                <div className="image-container">
-                  <img src={padel} alt="Zamalek Club" className="card-image" />
-                </div>
-
-                <div className="card-content">
-                  <h2>Zamalek Club</h2>
-
-                  <div className="prize">PRIZE: 50,000 EGP</div>
-
-                  <div className="details">
-                    <p>▣ Oct 15 - Oct 20, 2026</p>
-                    <p>⌖ Zamalek, Cairo</p>
-                    <p>♙ 24/32 Teams Registered</p>
+              {filteredTournaments.map((tournament) => (
+                <div className="tournament-card" key={tournament.id}>
+                  <div className="image-container">
+                    <img
+                      src={tournament.image}
+                      alt={tournament.title}
+                      className="card-image"
+                    />
                   </div>
 
-                  <button
-                    className="view-details"
-                    onClick={() => navigate("/details")}
-                  >
-                    View Details
-                  </button>
-                </div>
-              </div>
+                  <div className="card-content">
+                    <h2>{tournament.title}</h2>
 
-              {/* FOOTBALL */}
-              <div className="tournament-card">
-                <div className="image-container">
-                  <img
-                    src={football}
-                    alt="Cairo Football League"
-                    className="card-image"
-                  />
-                </div>
+                    <div className="prize">PRIZE: {tournament.prize}</div>
 
-                <div className="card-content">
-                  <h2>Cairo Football League</h2>
+                    <div className="details">
+                      <p>▣ {tournament.date}</p>
+                      <p>⌖ {tournament.location}</p>
+                      <p>♙ {tournament.teams}</p>
+                    </div>
 
-                  <div className="prize">PRIZE: 100,000 EGP</div>
-
-                  <div className="details">
-                    <p>▣ Nov 1 - Dec 15, 2026</p>
-                    <p>⌖ Multiple Venues</p>
-                    <p>♙ 14/16 Teams Registered</p>
+                    <button
+                      type="button"
+                      className="view-details"
+                      onClick={() => navigate(`/details/${tournament.id}`)}
+                    >
+                      View Details
+                    </button>
                   </div>
-
-                  <button
-                    className="view-details"
-                    onClick={() => navigate("/details")}
-                  >
-                    View Details
-                  </button>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -183,7 +191,11 @@ export default function Tournament() {
               <strong>1950</strong>
             </div>
 
-            <button className="leaderboard-button">
+            <button
+              type="button"
+              className="leaderboard-button"
+              onClick={() => navigate("/dashboard")}
+            >
               View Full Leaderboards →
             </button>
           </aside>

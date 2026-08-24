@@ -1,0 +1,360 @@
+.page {
+  background: #0b0e14;
+  color: #f8fafc;
+}
+
+.heroSection {
+  background: #0b0e14;
+  padding: 0 10.8% 3.25rem;
+}
+
+.heroImageWrap {
+  position: relative;
+  min-height: 455px;
+  overflow: hidden;
+  background: #0b0e14;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) brightness(0.54);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11, 14, 20, 0.42), transparent 16%, transparent 84%, rgba(11, 14, 20, 0.42)),
+    linear-gradient(180deg, rgba(11, 14, 20, 0.14), rgba(11, 14, 20, 0.26));
+}
+
+.heroContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.heroContent h1 {
+  margin: 0;
+  color: #ceff00;
+  font-size: clamp(2.8rem, 5.1vw, 4.9rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.heroContent p {
+  max-width: 620px;
+  margin: 1.05rem auto 0;
+  color: #f8fafc;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  opacity: 0.82;
+}
+
+.missionSection {
+  background: #0b0e14;
+  padding: 1rem 10.8% 3.75rem;
+}
+
+.missionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2.6rem;
+}
+
+.missionImageWrap {
+  overflow: hidden;
+  border: 1px solid rgba(206, 255, 0, 0.18);
+  border-radius: 8px;
+  background: #161920;
+}
+
+.missionImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.78;
+  object-fit: cover;
+}
+
+.missionCopy h2 {
+  margin: 0 0 1.05rem;
+  color: #f8fafc;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+.missionCopy p {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.03rem;
+  line-height: 1.8;
+  opacity: 0.82;
+}
+
+.deepSection {
+  background: #11141b;
+  border-top: 1px solid rgba(248, 250, 252, 0.08);
+  padding: 3rem 0 3.25rem;
+}
+
+.contentWrap {
+  width: 100%;
+  padding: 0 10.8%;
+}
+
+.sectionTitle,
+.teamTitle,
+.cta h2 {
+  margin: 0;
+  color: #f8fafc;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.sectionTitle {
+  font-size: 2.15rem;
+  line-height: 1.2;
+}
+
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.35rem;
+  margin-top: 2.15rem;
+}
+
+.valueCard,
+.teamCard {
+  background: #161920;
+  border: 1px solid rgba(248, 250, 252, 0.08);
+  border-radius: 7px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.valueCard {
+  min-height: 143px;
+  padding: 1.35rem 1.3rem 1.2rem;
+}
+
+.iconCircle {
+  display: inline-flex;
+  width: 43px;
+  height: 43px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(206, 255, 0, 0.12);
+  color: #ceff00;
+  font-size: 1.08rem;
+}
+
+.valueCard h3 {
+  margin: 0.8rem 0 0.45rem;
+  color: #f8fafc;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.valueCard p {
+  margin: 0 auto;
+  max-width: 260px;
+  color: #f8fafc;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.statsBand {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: calc(100% - 21.6%);
+  margin: 3.1rem auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(248, 250, 252, 0.08);
+  border-radius: 9px;
+  background:
+    linear-gradient(90deg, rgba(22, 25, 32, 0.98), rgba(206, 255, 0, 0.08)),
+    #161920;
+}
+
+.statItem {
+  position: relative;
+  padding: 2.15rem 1rem 2rem;
+  text-align: center;
+}
+
+.statItem + .statItem::before {
+  position: absolute;
+  top: 29%;
+  bottom: 29%;
+  left: 0;
+  width: 1px;
+  content: "";
+  background: rgba(248, 250, 252, 0.06);
+}
+
+.statItem strong {
+  display: block;
+  color: #ceff00;
+  font-size: clamp(2.2rem, 4vw, 3.45rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.statItem span {
+  display: block;
+  margin-top: 0.55rem;
+  color: #f8fafc;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.teamTitle {
+  margin-top: 3.8rem;
+  font-size: clamp(2.55rem, 4.5vw, 4.1rem);
+  line-height: 1.1;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.35rem;
+  margin-top: 2.55rem;
+}
+
+.teamCard {
+  min-height: 198px;
+  padding: 1.65rem 1.35rem 1.45rem;
+}
+
+.avatar {
+  width: 87px;
+  height: 87px;
+  margin: 0 auto 1rem;
+  border: 1px solid rgba(206, 255, 0, 0.28);
+  border-radius: 50%;
+  background: #11141b;
+}
+
+.teamCard h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.teamCard div {
+  margin-top: 0.25rem;
+  color: #ceff00;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.teamCard p {
+  max-width: 260px;
+  margin: 0.55rem auto 0;
+  color: #f8fafc;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.cta {
+  padding: 4rem 10.8% 0;
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.ctaActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 1.45rem;
+}
+
+.ctaActions button {
+  min-width: 112px;
+  height: 42px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.ctaActions button:first-child {
+  border: 1px solid #ceff00;
+  background: #ceff00;
+  color: #0b0e14;
+  box-shadow: 0 0 18px rgba(206, 255, 0, 0.34);
+}
+
+.ctaActions button:last-child {
+  border: 1px solid #ceff00;
+  background: transparent;
+  color: #f8fafc;
+}
+
+.ctaActions button:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .heroSection,
+  .missionSection,
+  .contentWrap,
+  .cta {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .heroImageWrap {
+    min-height: 360px;
+  }
+
+  .missionGrid,
+  .valueGrid,
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsBand {
+    width: 90%;
+  }
+}
+
+@media (max-width: 640px) {
+  .statsBand {
+    grid-template-columns: 1fr;
+  }
+
+  .statItem + .statItem::before {
+    top: 0;
+    right: 22%;
+    bottom: auto;
+    left: 22%;
+    width: auto;
+    height: 1px;
+  }
+}

@@ -1,4 +1,3 @@
-import React from "react";
 import { Container } from "react-bootstrap";
 import { BsArrowRepeat, BsShieldLock } from "react-icons/bs";
 import styles from "./VerifyingPayment.module.css";

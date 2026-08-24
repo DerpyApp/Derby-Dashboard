@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import TopBar from "../TopBar/TopBar";
-import Stepper from "../Stepper/Stepper";
-import InformationStep from "./steps/InformationStep";
-import PaymentStep from "./steps/PaymentStep";
-import VerifyingPayment from "./steps/VerifyingPayment";
-import ConfirmationStep from "./steps/ConfirmationStep";
+import TopBar from "../../../TopBar/TopBar";
+import Stepper from "../../../Stepper/Stepper";
+import InformationStep from "./InformationStep";
+import PaymentStep from "./PaymentStep";
+import VerifyingPayment from "./VerifyingPayment";
+import ConfirmationStep from "./ConfirmationStep";
 
-import { fetchBooking, createPaymentIntent, getPaymentDetails } from "../../../api/paymentApi";
-import { DEFAULT_BOOKING, DEFAULT_USER_INFO, mapBookingResponse } from "../../../data/bookingData";
-import { estimateTotals } from "../../../utils/pricing";
-import "../theme.css";
+import { fetchBooking, createPaymentIntent, getPaymentDetails } from "../../../../api/paymentApi";
+import { DEFAULT_BOOKING, DEFAULT_USER_INFO, mapBookingResponse } from "../../../../data/bookingData";
+import { estimateTotals } from "../../../../utils/pricing";
+import "../../../theme.css";
 import styles from "./PaymentPage.module.css";
 
 const STEP_LABELS = ["Information", "Payment", "Confirmation"];
@@ -74,6 +75,7 @@ function normalizeStatus(raw) {
  * `POST /api/Booking` elsewhere in the app.
  */
 export default function PaymentPage() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
 
   const bookingIdRef = useRef(getBookingIdFromUrl() || loadPaymentState()?.bookingId || null);
@@ -292,6 +294,7 @@ export default function PaymentPage() {
     setPaymentPhase("idle");
     setFailureMessage(null);
     setConfirmedOrder(null);
+    navigate("/dashboard");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 

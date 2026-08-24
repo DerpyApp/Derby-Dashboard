@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./DetailsPage.css";
 
 // ================= IMAGES =================
-
-import logo from "../../assets/logo.png";
 
 import mainContent from "../../assets/details/Main Content.png";
 
@@ -26,6 +24,7 @@ import sportsCafe from "../../assets/details/sports-cafe.png";
 
 export default function DetailsPage() {
   const navigate = useNavigate();
+  const { id = "zamalek-club" } = useParams();
 
   const handleGetDirections = () => {
     window.open(
@@ -39,45 +38,15 @@ export default function DetailsPage() {
   };
 
   const handleBookAlpha = () => {
-    alert("Booking 5-a-Side Pitch Alpha");
+    navigate(`/payment?bookingId=${id}-alpha`);
   };
 
   const handleBookCourt = () => {
-    alert("Booking Padel Court 1");
+    navigate(`/payment?bookingId=${id}-padel`);
   };
 
   return (
     <div className="details-page">
-      {/* ================= HEADER ================= */}
-
-      <header className="details-header">
-        <img src={logo} alt="Derby" className="details-logo" />
-
-        <nav className="details-nav">
-          <button onClick={() => navigate("/")}>Home</button>
-
-          <button className="active" onClick={() => navigate("/tournament")}>
-            Tournaments
-          </button>
-
-          <button onClick={() => navigate("/pricing")}>Pricing</button>
-
-          <button onClick={() => navigate("/contact")}>Contact</button>
-
-          <button onClick={() => navigate("/about")}>About us</button>
-        </nav>
-
-        <div className="details-auth">
-          <button className="signin" onClick={() => navigate("/login")}>
-            Sign in
-          </button>
-
-          <button className="signup" onClick={() => navigate("/register")}>
-            Sign up
-          </button>
-        </div>
-      </header>
-
       {/* ================= HERO ================= */}
 
       <section
@@ -275,9 +244,9 @@ export default function DetailsPage() {
               </p>
 
               <div className="location-buttons">
-                <button onClick={handleGetDirections}>◈ Get Directions</button>
+                <button onClick={handleGetDirections}>Get Directions</button>
 
-                <button onClick={handleCallClub}>☎ Call Club</button>
+                <button onClick={handleCallClub}>Call Club</button>
               </div>
             </div>
           </section>
@@ -314,28 +283,6 @@ export default function DetailsPage() {
           </section>
         </aside>
       </main>
-
-      {/* ================= FOOTER ================= */}
-
-      <footer className="details-footer">
-        <div className="footer-left">
-          <img src={logo} alt="Derby" className="footer-logo" />
-
-          <p>© 2026 Derby Sports Ecosystem. All Rights Reserved.</p>
-        </div>
-
-        <div className="footer-links">
-          <span className="footer-privacy">Privacy Policy</span>
-
-          <span className="footer-terms">Terms of Service</span>
-
-          <span className="footer-contact">Contact Support</span>
-
-          <span className="footer-partner">Partner with Us</span>
-
-          <span className="footer-careers">Careers</span>
-        </div>
-      </footer>
     </div>
   );
 }

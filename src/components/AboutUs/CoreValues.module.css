@@ -1,5 +1,7 @@
 .section {
-  padding: 4rem 0;
+  padding: 3rem 0 3.5rem;
+  background: #151719;
+  border-bottom: 1px solid var(--derby-border);
 }
 
 .heading {
@@ -9,10 +11,10 @@
 }
 
 .card {
-  background-color: var(--derby-bg-alt);
+  background-color: #0f1113;
   border: 1px solid var(--derby-border);
-  border-radius: 12px;
-  padding: 2.2rem 1.5rem;
+  border-radius: 4px;
+  padding: 2rem 1.5rem;
   text-align: center;
   height: 100%;
 }

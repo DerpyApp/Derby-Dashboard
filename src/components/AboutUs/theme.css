@@ -1,16 +1,20 @@
 /* Import this once, globally (e.g. in index.js), so every
    AboutUs/*.module.css file can use these variables. */
 :root {
-  --derby-bg: #0e0f0c;
-  --derby-bg-alt: #131410;
-  --derby-green: #b6ff1a;
-  --derby-green-dim: rgba(182, 255, 26, 0.15);
-  --derby-text: #f5f5f2;
-  --derby-text-muted: #a9aca3;
+  --derby-bg: #0b0e14;
+  --derby-bg-alt: #11141b;
+  --derby-green: #ceff00;
+  --derby-green-dim: rgba(206, 255, 0, 0.15);
+  --derby-text: #f8fafc;
+  --derby-text-muted: rgba(248, 250, 252, 0.78);
   --derby-border: rgba(255, 255, 255, 0.08);
 }
 
 body {
   background-color: var(--derby-bg);
   font-family: "Poppins", "Inter", system-ui, sans-serif;
+}
+
+.about-page-shell {
+  background: var(--derby-bg);
 }

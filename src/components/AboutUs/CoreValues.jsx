@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { BsLightbulb, BsPeopleFill, BsAwardFill } from "react-icons/bs";
 import styles from "./CoreValues.module.css";

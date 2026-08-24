@@ -1,19 +1,21 @@
 .section {
-  padding: 3rem 0 5rem;
+  padding: 4rem 0 3.5rem;
+  background: var(--derby-bg);
 }
 
 .heading {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: clamp(2rem, 4vw, 3.25rem);
   color: var(--derby-text);
 }
 
 .card {
   border: 1px solid var(--derby-border);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 2.2rem 1.5rem;
   text-align: center;
   height: 100%;
+  background: #0f1113;
 }
 
 .avatar {

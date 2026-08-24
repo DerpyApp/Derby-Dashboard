@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from "./Footer.module.css";
 
@@ -12,11 +12,11 @@ export default function Footer() {
           </Col>
           <Col md={6}>
             <ul className={styles.links}>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Service</a></li>
-              <li><a href="/support">Contact Support</a></li>
-              <li><a href="/partners">Partner with Us</a></li>
-              <li><a href="/careers">Careers</a></li>
+              <li><Link to="/legal?tab=privacy">Privacy Policy</Link></li>
+              <li><Link to="/legal?tab=terms">Terms of Service</Link></li>
+              <li><Link to="/contact">Contact Support</Link></li>
+              <li><Link to="/contact">Partner with Us</Link></li>
+              <li><Link to="/contact">Careers</Link></li>
             </ul>
           </Col>
           <Col md={3} className={styles.copy}>

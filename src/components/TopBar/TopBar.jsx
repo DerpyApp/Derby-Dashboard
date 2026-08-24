@@ -1,4 +1,3 @@
-import React from "react";
 import { BsBell, BsPersonCircle } from "react-icons/bs";
 import styles from "./TopBar.module.css";
 

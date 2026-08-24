@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import styles from "./Stepper.module.css";
 
@@ -9,7 +9,7 @@ export default function Stepper({ steps }) {
   return (
     <div className={styles.full}>
       {steps.map((step, idx) => (
-        <React.Fragment key={step.label}>
+        <Fragment key={step.label}>
           <div className={styles.stepItem}>
             <div
               className={`${styles.circle} ${
@@ -33,7 +33,7 @@ export default function Stepper({ steps }) {
               }`}
             />
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

@@ -1,0 +1,97 @@
+.content {
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.wrap {
+  max-width: 620px;
+  width: 100%;
+  background-color: var(--derby-bg-alt);
+  border: 1px solid var(--derby-border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.successIcon {
+  color: var(--derby-green);
+  font-size: 3.4rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+
+.subtitle {
+  color: var(--derby-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.8rem;
+}
+
+.detailCard {
+  background-color: var(--derby-bg);
+  border: 1px solid var(--derby-border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  text-align: left;
+  height: 100%;
+}
+
+.detailLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--derby-green);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.detailValue {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.detailSub {
+  color: var(--derby-text-muted);
+  font-size: 0.78rem;
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  color: var(--derby-text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--derby-border);
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+}
+
+.statusGreen {
+  color: var(--derby-green);
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1.6rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+  .wrap {
+    padding: 2rem 1.2rem;
+  }
+}

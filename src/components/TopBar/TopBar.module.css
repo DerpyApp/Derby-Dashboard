@@ -1,0 +1,63 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--derby-border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--derby-text);
+  letter-spacing: 0.5px;
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--derby-green);
+  color: #0e0f0c;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.cancelTextBtn {
+  background: transparent;
+  border: none;
+  color: var(--derby-text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cancelTextBtn:hover {
+  color: var(--derby-text);
+}
+
+.spacer {
+  width: 60px;
+}
+
+.appIcons {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  color: var(--derby-text-muted);
+  font-size: 1.1rem;
+}
+
+.appIcons svg {
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+
+.appIcons svg:hover {
+  color: var(--derby-text);
+}

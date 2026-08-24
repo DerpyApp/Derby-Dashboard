@@ -1,0 +1,76 @@
+.full {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  padding: 2.5rem 0 3rem;
+}
+
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 90px;
+}
+
+.circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.circleFilled {
+  background-color: var(--derby-green);
+  color: #0e0f0c;
+}
+
+.circleUpcoming {
+  background-color: transparent;
+  border: 1px solid var(--derby-border);
+  color: var(--derby-text-muted);
+}
+
+.label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.labelActive {
+  color: var(--derby-green);
+  font-weight: 600;
+}
+
+.labelUpcoming {
+  color: var(--derby-text-muted);
+}
+
+.connector {
+  width: 90px;
+  height: 1px;
+  margin-top: 17px;
+}
+
+.connectorDone {
+  background-color: var(--derby-green);
+}
+
+.connectorUpcoming {
+  background-color: var(--derby-border);
+}
+
+@media (max-width: 767px) {
+  .full {
+    flex-wrap: wrap;
+    row-gap: 1rem;
+  }
+  .connector {
+    width: 40px;
+  }
+}

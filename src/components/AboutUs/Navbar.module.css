@@ -1,0 +1,71 @@
+.navbar {
+  background-color: var(--derby-bg) !important;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--derby-border);
+}
+
+.brand {
+  color: var(--derby-text) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--derby-green);
+  color: #0e0f0c;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.links :global(.nav-link) {
+  color: var(--derby-text-muted) !important;
+  font-size: 0.92rem;
+  margin: 0 0.85rem;
+  transition: color 0.2s ease;
+}
+
+.links :global(.nav-link:hover) {
+  color: var(--derby-text) !important;
+}
+
+.activeLink {
+  color: var(--derby-green) !important;
+  font-weight: 500;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signinLink {
+  color: var(--derby-text) !important;
+  font-size: 0.92rem;
+}
+
+.signupBtn {
+  background-color: var(--derby-green) !important;
+  border: none !important;
+  color: #0e0f0c !important;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 991px) {
+  .links,
+  .auth {
+    margin-top: 1rem;
+  }
+}

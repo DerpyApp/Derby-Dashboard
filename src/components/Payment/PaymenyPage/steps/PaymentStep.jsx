@@ -56,11 +56,10 @@ export default function PaymentStep({
   publicKey,
   setupPhase, // "idle" | "preparing" | "ready" | "error"
   setupError,
-  phase, // "idle" | "starting" | "failed"
+  phase, // "idle" | "failed"
   failureMessage,
   onBack,
-  onPayAttemptStart,
-  onPixelComplete,
+  onProceedToReview, // new: advances to Review step
   onRetrySetup,
 }) {
   const [isCardValid, setIsCardValid] = useState(false);
@@ -94,18 +93,16 @@ export default function PaymentStep({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setupPhase, clientSecret, publicKey]);
 
-  const isBusy = phase === "starting";
-  const payDisabled = isBusy || setupPhase !== "ready" || !isCardValid;
+  const isBusy = false; // busy state now lives on ReviewStep
+  const payDisabled = setupPhase !== "ready" || !isCardValid;
 
   function handleSubmit(e) {
     e.preventDefault();
     if (payDisabled) return;
-    // Tell the parent we're starting (busy state), then hand off to Pixel —
-    // disablePay:true means Pixel does nothing until this event fires. Card
-    // data itself is read and submitted entirely inside Paymob's SDK; we
-    // never see it.
-    onPayAttemptStart();
-    window.dispatchEvent(new Event("payFromOutside"));
+    // Card details have been filled in — advance to Review step.
+    // The actual Pixel dispatch (payFromOutside) happens on Review's
+    // "Confirm & Pay" so the user can review before being charged.
+    onProceedToReview();
   }
 
   return (
@@ -230,7 +227,7 @@ export default function PaymentStep({
               </div>
 
               <button type="submit" className={`${shared.btnPrimary} ${styles.payBtn}`} disabled={payDisabled}>
-                <BsLock /> {isBusy ? "Processing…" : "Pay Now"}
+                <BsLock /> Review &amp; Confirm
               </button>
               <p className={styles.secureNote}>
                 <BsShieldCheck /> Secured by Paymob — your card details never touch our servers

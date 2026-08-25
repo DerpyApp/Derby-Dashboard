@@ -2,9 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { verifyOTP, sendOTP } from '@features/auth/api/authApi';
 import { ROUTES } from '@config/constants';
-
-// Toggle the mock OTP flow while backend integration is unavailable.
-const ENABLE_MOCK_MODE = true;
+import Alert from '@components/ui/Alert';
 
 export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
   const navigate = useNavigate();
@@ -15,7 +13,9 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
   const [serverError, setServerError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  const [resendMsg, setResendMsg] = useState('');
+  const [statusMsg, setStatusMsg] = useState(
+    location.state?.successMessage || ''
+  );
 
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
@@ -24,7 +24,7 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
     if (/[^0-9]/.test(value) && value !== '') return;
 
     const newOtp = [...otp];
-    // Handle pasted content or single char
+    // Handle pasted content or multi-digit paste
     if (value.length > 1) {
       const pasted = value.slice(0, 4).split('');
       for (let i = 0; i < 4; i++) {
@@ -38,6 +38,7 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
 
     newOtp[index] = value;
     setOtp(newOtp);
+    setServerError('');
 
     // Auto-advance
     if (value && index < 3) {
@@ -54,25 +55,29 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const code = otp.join('');
-    if (code.length < 4) return;
+    if (code.length < 4) {
+      setServerError('Please enter the complete 4-digit verification code.');
+      return;
+    }
 
     setIsLoading(true);
     setServerError('');
+    setStatusMsg('');
 
     try {
-      if (ENABLE_MOCK_MODE) {
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        navigate(ROUTES.RESET_PASSWORD, {
-          state: { email, resetToken: 'mock-reset-token-12345' },
-        });
-      } else {
-        const response = await verifyOTP({ email, otp: code });
-        navigate(ROUTES.RESET_PASSWORD, {
-          state: { email, resetToken: response.resetToken },
-        });
-      }
+      const response = await verifyOTP({ email, otp: code });
+      const resetToken =
+        response?.resetToken ||
+        response?.token ||
+        response?.data?.resetToken ||
+        response?.data?.token ||
+        '';
+
+      navigate(ROUTES.RESET_PASSWORD, {
+        state: { email, resetToken },
+      });
     } catch (err) {
-      setServerError(err.message || 'Invalid OTP. Please check and try again.');
+      setServerError(err.message || 'Invalid or expired OTP token. Please try again.');
       setOtp(['', '', '', '']);
       inputRefs[0].current?.focus();
     } finally {
@@ -83,18 +88,13 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
   const handleResend = async () => {
     setIsResending(true);
     setServerError('');
-    setResendMsg('');
+    setStatusMsg('');
 
     try {
-      if (ENABLE_MOCK_MODE) {
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        setResendMsg('A new verification code has been sent.');
-      } else {
-        await sendOTP({ email });
-        setResendMsg('A new verification code has been sent.');
-      }
+      const response = await sendOTP({ email });
+      setStatusMsg(response?.message || 'A new verification code has been sent to your email.');
     } catch (err) {
-      setServerError(err.message || 'Failed to resend verification code.');
+      setServerError(err.message || 'Failed to resend verification code. Please try again.');
     } finally {
       setIsResending(false);
     }
@@ -117,23 +117,28 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
       </h1>
 
       {/* Subtitle */}
-      <p className="text-[#8e98a5] text-xs leading-relaxed max-w-[300px] mx-auto mb-7">
-        We've sent a 4-digit code to your email. Enter it below to continue.
+      <p className="text-[#8e98a5] text-xs leading-relaxed max-w-[300px] mx-auto mb-5">
+        We've sent a 4-digit code to <span className="text-white font-medium">{email}</span>. Enter it below to continue.
       </p>
 
-      {/* Server Error Message */}
-      {serverError && (
-        <div className="mb-5 text-xs text-red-400 bg-red-500/10 border border-red-500/20 py-2 px-3 rounded-lg">
-          {serverError}
-        </div>
-      )}
+      {/* Alerts */}
+      <div className="space-y-3 mb-5 text-left">
+        {serverError && (
+          <Alert
+            variant="error"
+            message={serverError}
+            onClose={() => setServerError('')}
+          />
+        )}
 
-      {/* Resend Success Message */}
-      {resendMsg && (
-        <div className="mb-5 text-xs text-[#C8F13A] bg-[#C8F13A]/10 border border-[#C8F13A]/20 py-2 px-3 rounded-lg">
-          {resendMsg}
-        </div>
-      )}
+        {statusMsg && (
+          <Alert
+            variant="success"
+            message={statusMsg}
+            onClose={() => setStatusMsg('')}
+          />
+        )}
+      </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit}>
@@ -143,6 +148,7 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
             <input
               key={index}
               ref={inputRefs[index]}
+              id={`otp-input-${index}`}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -150,7 +156,8 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
               disabled={isLoading}
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-12 h-12 sm:w-14 sm:h-14 bg-white text-gray-900 font-bold text-center text-xl rounded-xl border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all disabled:opacity-50"
+              className="w-12 h-12 sm:w-14 sm:h-14 bg-white text-gray-900 font-bold text-center text-xl rounded-xl border border-transparent focus:outline-none focus:ring-2 focus:ring-[#C8F13A] shadow-sm transition-all disabled:opacity-50"
+              aria-label={`Digit ${index + 1} of 4`}
             />
           ))}
         </div>
@@ -158,22 +165,28 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
         {/* Action Button */}
         <button
           type="submit"
+          id="otp-verify-btn"
           disabled={isLoading || otp.join('').length < 4}
-          className="text-xs text-gray-300 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors mb-6 inline-flex items-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full font-bold text-sm py-3 px-4 rounded-xl bg-[#C8F13A] text-[#111317] hover:bg-[#bce42f] shadow-[0_0_16px_rgba(200,241,58,0.2)] transition-all flex items-center justify-center gap-2 mb-5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Verifying...' : 'Verify Code →'}
+          {isLoading ? (
+            <span className="inline-block w-4 h-4 border-2 border-[#111317] border-t-transparent rounded-full animate-spin" />
+          ) : (
+            'Verify Code →'
+          )}
         </button>
 
         {/* Resend Link */}
-        <div className="text-xs text-[#8e98a5] mb-5">
+        <div className="text-xs text-[#8e98a5] mb-4">
           Didn't receive the code?{' '}
           <button
             type="button"
+            id="otp-resend-btn"
             disabled={isResending}
             onClick={handleResend}
             className="text-[#C8F13A] font-semibold hover:underline bg-transparent border-0 p-0 cursor-pointer disabled:opacity-50"
           >
-            {isResending ? 'Sending...' : 'Resend'}
+            {isResending ? 'Sending...' : 'Resend Code'}
           </button>
         </div>
 
@@ -181,7 +194,8 @@ export default function OTPForm({ email: defaultEmail = 'user@example.com' }) {
         <div>
           <Link
             to={ROUTES.LOGIN}
-            className="text-xs text-[#8e98a5] hover:text-gray-300 transition-colors inline-flex items-center gap-1"
+            id="otp-back-link"
+            className="text-xs text-[#8e98a5] hover:text-white transition-colors inline-flex items-center gap-1"
           >
             ← Back to Login
           </Link>

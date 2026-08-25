@@ -1,34 +1,38 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import TopBar from "../../../TopBar/TopBar";
 import Stepper from "../../../Stepper/Stepper";
 import InformationStep from "./InformationStep";
 import PaymentStep from "./PaymentStep";
+import ReviewStep from "./ReviewStep";
 import VerifyingPayment from "./VerifyingPayment";
 import ConfirmationStep from "./ConfirmationStep";
 
 import { fetchBooking, createPaymentIntent, getPaymentDetails } from "../../../../api/paymentApi";
 import { DEFAULT_BOOKING, DEFAULT_USER_INFO, mapBookingResponse } from "../../../../data/bookingData";
 import { estimateTotals } from "../../../../utils/pricing";
+import { useAuth } from "../../../../features/auth/hooks/useAuth";
 import "../../../theme.css";
 import styles from "./PaymentPage.module.css";
 
-const STEP_LABELS = ["Information", "Payment", "Confirmation"];
+// ── Step labels ─────────────────────────────────────────────
+const STEP_LABELS = ["Information", "Payment", "Review", "Confirmation"];
 const PAYMENT_STATE_KEY = "derby_payment_state"; // { bookingId, paymentId }
 const POLL_INTERVAL_MS = 1500;
 const POLL_TIMEOUT_MS = 30000;
 
-// Paymob's public key is safe to ship to the browser (it's what the Pixel
-// SDK uses to identify the merchant integration, not a secret). PadelBooking's
-// POST /api/Payments/intent only returns clientSecret + paymentUrl (see
-// API_FLOW.md), so the public key still needs to live in the frontend env.
 const PAYMOB_PUBLIC_KEY = import.meta.env.VITE_PAYMOB_PUBLIC_KEY || "";
 
 function stepsFor(currentStep) {
   return STEP_LABELS.map((label, idx) => {
     const stepNumber = idx + 1;
-    const status = stepNumber < currentStep ? "done" : stepNumber === currentStep ? "active" : "upcoming";
+    const status =
+      stepNumber < currentStep
+        ? "done"
+        : stepNumber === currentStep
+        ? "active"
+        : "upcoming";
     return { label, status };
   });
 }
@@ -53,9 +57,6 @@ function clearPaymentState() {
   sessionStorage.removeItem(PAYMENT_STATE_KEY);
 }
 
-// Normalizes whatever status string PadelBooking's Payments API returns
-// ("Paid", "Succeeded", "Pending", "Failed", ...) — the exact enum isn't
-// spelled out in API_FLOW.md, so this matches case-insensitively on intent.
 function normalizeStatus(raw) {
   const s = String(raw || "").toLowerCase();
   if (["paid", "succeeded", "success", "completed"].includes(s)) return "paid";
@@ -64,75 +65,115 @@ function normalizeStatus(raw) {
 }
 
 /**
- * Single-page checkout wizard: Information -> Payment (Paymob Pixel embedded
- * IN this page, no redirect) -> verifying -> Confirmation. All step state
- * lives here so nothing is lost moving back and forth.
- *
- * Booking data and the Paymob Intention both come straight from the
- * PadelBooking API (see API_FLOW.md, Steps 3 & 4) — there is no local
- * Node/Paymob server anymore. `bookingId` is read from the `?bookingId=`
- * query param, i.e. this page is entered right after
- * `POST /api/Booking` elsewhere in the app.
+ * 4-step checkout wizard:
+ *  1 Information → 2 Payment → 3 Review → 4 Confirmation
  */
 export default function PaymentPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
 
-  const bookingIdRef = useRef(getBookingIdFromUrl() || loadPaymentState()?.bookingId || null);
+  const bookingIdRef = useRef(
+    getBookingIdFromUrl() || loadPaymentState()?.bookingId || null
+  );
   const paymentIdRef = useRef(loadPaymentState()?.paymentId || null);
 
-  const [booking, setBooking] = useState(DEFAULT_BOOKING);
-  const [bookingLoadError, setBookingLoadError] = useState(null);
-  const [userInfo, setUserInfo] = useState(DEFAULT_USER_INFO);
+  const navBookingState = location.state?.booking || null;
 
-  // Intention/Pixel setup lifecycle for the current Payment step visit.
+  const buildInitialBooking = () => {
+    if (navBookingState) {
+      return {
+        id: navBookingState.id ?? bookingIdRef.current,
+        image: navBookingState.courtImage || navBookingState.image || DEFAULT_BOOKING.image,
+        venueName: navBookingState.venueName || navBookingState.courtName || "Booking",
+        location: navBookingState.location || "",
+        sport: navBookingState.tag || navBookingState.sport || "",
+        sportMeta: navBookingState.courtName || "",
+        date: navBookingState.date || "",
+        time: navBookingState.time || "",
+        duration: navBookingState.duration || "",
+        currency: navBookingState.currency || "EGP",
+        pricing: {
+          pitchFee: navBookingState.amount || navBookingState.pricing?.pitchFee || 0,
+          serviceFee: 0,
+          taxRate: 0,
+        },
+      };
+    }
+    return DEFAULT_BOOKING;
+  };
+
+  const [booking, setBooking] = useState(buildInitialBooking);
+  const [bookingLoadError, setBookingLoadError] = useState(null);
+  
+  // Prefill user details if logged in
+  const [userInfo, setUserInfo] = useState(() => ({
+    fullName: user?.fullName || user?.name || "",
+    email: user?.email || "",
+    phone: user?.phoneNumber || user?.phone || "",
+  }));
+
+  // Update userInfo when user object becomes available
+  useEffect(() => {
+    if (user) {
+      setUserInfo((prev) => ({
+        fullName: prev.fullName || user.fullName || user.name || "",
+        email: prev.email || user.email || "",
+        phone: prev.phone || user.phoneNumber || user.phone || "",
+      }));
+    }
+  }, [user]);
+
+  // Intention/Pixel setup
   const [setupPhase, setSetupPhase] = useState("idle"); // idle | preparing | ready | error
   const [setupError, setSetupError] = useState(null);
-  const [paymentSetup, setPaymentSetup] = useState(null); // { clientSecret, publicKey }
-  const [setupAttempt, setSetupAttempt] = useState(0); // bump to force a fresh intention fetch
+  const [paymentSetup, setPaymentSetup] = useState(null);
+  const [setupAttempt, setSetupAttempt] = useState(0);
 
-  // Payment attempt lifecycle (after the user clicks Pay Now).
+  // Payment attempt lifecycle
   const [paymentPhase, setPaymentPhase] = useState("idle"); // idle | starting | verifying | failed
   const [failureMessage, setFailureMessage] = useState(null);
 
-  const [confirmedOrder, setConfirmedOrder] = useState(null); // server-verified payment once paid
+  const [confirmedOrder, setConfirmedOrder] = useState(null);
   const pollTimerRef = useRef(null);
   const pollDeadlineRef = useRef(null);
 
   const displayTotals = estimateTotals(booking.pricing, null);
 
-  // Load the real booking (venue, date/time, price) as soon as we know
-  // which one we're paying for.
+  // ── Load live booking details via GET /api/Booking/{id} ───────────
   useEffect(() => {
-    if (!bookingIdRef.current) {
-      setBookingLoadError("No booking selected. Go back and pick a booking to pay for.");
+    const rawId = bookingIdRef.current;
+    if (!rawId) {
+      if (!navBookingState) {
+        setBookingLoadError("No booking selected. Go back and choose a court to book.");
+      }
       return;
     }
+
     let cancelled = false;
-    fetchBooking(bookingIdRef.current)
+    fetchBooking(rawId)
       .then((data) => {
         if (cancelled) return;
         setBooking(mapBookingResponse(data));
       })
       .catch((err) => {
         if (cancelled) return;
-        setBookingLoadError(
-          err?.response?.data?.error || "Could not load this booking. Please go back and try again."
-        );
+        // If we have navBookingState, fallback gracefully
+        if (!navBookingState) {
+          const serverMsg = err?.response?.data?.error || err?.response?.data?.message || err?.message;
+          setBookingLoadError(
+            serverMsg || "Could not load this booking. Please go back and try again."
+          );
+        }
       });
+
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [navBookingState]);
 
-  // Create the Paymob intention as soon as the Payment step is entered, so
-  // the embedded card fields are ready before the user even reaches for
-  // "Pay Now". IMPORTANT: this effect must NOT depend on setupPhase, since
-  // it sets setupPhase itself — doing so would re-run the effect's cleanup
-  // (cancelling the very request it just started) the instant it flips to
-  // "preparing", silently discarding the result when it later resolves.
-  // setupAttempt is the only thing that forces a fresh fetch while already
-  // on step 2 (e.g. a manual retry).
+  // ── Create Paymob intention when entering step 2 ──────────
   useEffect(() => {
     if (currentStep !== 2 || !bookingIdRef.current) return;
 
@@ -144,38 +185,28 @@ export default function PaymentPage() {
     createPaymentIntent(bookingIdRef.current)
       .then((result) => {
         if (cancelled) return;
-
         if (!result.clientSecret) {
           setSetupPhase("error");
-          setSetupError("PadelBooking did not return the data needed to start checkout.");
+          setSetupError("Payment gateway did not return the data needed to start checkout.");
           return;
         }
-
-        // The backend may or may not include an id to poll status with;
-        // fall back to the intention/clientSecret itself if not.
         const paymentId = result.paymentId ?? result.id ?? result.clientSecret;
         paymentIdRef.current = paymentId;
         savePaymentState({ bookingId: bookingIdRef.current, paymentId });
-
         setPaymentSetup({ clientSecret: result.clientSecret, publicKey: PAYMOB_PUBLIC_KEY });
         setSetupPhase("ready");
       })
       .catch((err) => {
         if (cancelled) return;
-        const serverMessage = err?.response?.data?.error;
+        const serverMessage = err?.response?.data?.message || err?.response?.data?.error;
         setSetupPhase("error");
-        setSetupError(serverMessage || "Could not start secure checkout with Paymob. Please try again.");
+        setSetupError(serverMessage || "Could not start secure checkout. Please try again.");
       });
 
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => { cancelled = true; };
   }, [currentStep, setupAttempt]);
 
-  // Defensive fallback: some payment methods/3-D-Secure paths can still
-  // involve a full-page hand-off and back. If we ever land back with this
-  // query param, resume verification instead of leaving the user stuck.
+  // ── Defensive return-from-3DS handler ──────────────────────
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("checkout") === "return" && paymentIdRef.current) {
@@ -184,7 +215,6 @@ export default function PaymentPage() {
       startPolling();
     }
     return stopPolling;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function stopPolling() {
@@ -211,7 +241,7 @@ export default function PaymentPage() {
         clearPaymentState();
         setConfirmedOrder(details);
         setPaymentPhase("idle");
-        setCurrentStep(3);
+        setCurrentStep(4);
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
@@ -227,13 +257,13 @@ export default function PaymentPage() {
         stopPolling();
         setPaymentPhase("failed");
         setFailureMessage(
-          "We couldn't confirm your payment yet. If money left your account, it will be confirmed shortly — otherwise, please try again."
+          "We couldn't confirm your payment yet. If money left your account it will be confirmed shortly — otherwise please try again."
         );
         return;
       }
 
       pollTimerRef.current = setTimeout(poll, POLL_INTERVAL_MS);
-    } catch (err) {
+    } catch {
       if (Date.now() >= pollDeadlineRef.current) {
         stopPolling();
         setPaymentPhase("failed");
@@ -244,33 +274,32 @@ export default function PaymentPage() {
     }
   }
 
-  function goToPayment() {
-    setCurrentStep(2);
+  function goToStep(step) {
+    setCurrentStep(step);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function goToPayment() { goToStep(2); }
+  function goToReview() { goToStep(3); }
+
   function goToInformation() {
-    // Reset the Payment step's setup so re-entering it creates a fresh
-    // intention (Paymob client secrets are single-use / time-limited).
     setSetupPhase("idle");
     setPaymentSetup(null);
     setPaymentPhase("idle");
     setFailureMessage(null);
-    setCurrentStep(1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    goToStep(1);
   }
 
-  // Called by PaymentStep the instant it dispatches the payment to Pixel.
-  function handlePayAttemptStart() {
+  function goBackToPayment() {
+    setPaymentPhase("idle");
+    setFailureMessage(null);
+    goToStep(2);
+  }
+
+  function handleConfirmAndPay() {
     setPaymentPhase("starting");
     setFailureMessage(null);
-  }
-
-  // Called by PaymentStep's Pixel afterPaymentComplete callback. We never
-  // trust this alone — it only tells us an attempt finished; PadelBooking's
-  // own verified status (backed by Paymob's webhook) is what actually
-  // confirms the booking.
-  function handlePixelComplete() {
+    window.dispatchEvent(new Event("payFromOutside"));
     startPolling();
   }
 
@@ -278,14 +307,10 @@ export default function PaymentPage() {
     setPaymentSetup(null);
     setPaymentPhase("idle");
     setFailureMessage(null);
-    setSetupAttempt((n) => n + 1); // forces the intention-creation effect to re-run
+    setSetupAttempt((n) => n + 1);
   }
 
-  function handleBackToDashboard() {
-    if (typeof window !== "undefined" && typeof window.derbyNavigateToDashboard === "function") {
-      window.derbyNavigateToDashboard();
-      return;
-    }
+  function handleBackToHome() {
     clearPaymentState();
     setCurrentStep(1);
     setUserInfo(DEFAULT_USER_INFO);
@@ -294,18 +319,20 @@ export default function PaymentPage() {
     setPaymentPhase("idle");
     setFailureMessage(null);
     setConfirmedOrder(null);
-    navigate("/dashboard");
+    navigate("/");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const showVerifying = currentStep === 2 && paymentPhase === "verifying";
+  const showVerifying = currentStep === 3 && paymentPhase === "verifying";
 
   if (bookingLoadError) {
     return (
       <div className={styles.page}>
-        <TopBar variant="checkout" cancelLabel="Cancel Checkout" onCancel={handleBackToDashboard} />
+        <TopBar variant="checkout" cancelLabel="Cancel" onCancel={handleBackToHome} />
         <div className={styles.stepWrap}>
-          <p style={{ color: "#f5f5f2", textAlign: "center", padding: "48px 16px" }}>{bookingLoadError}</p>
+          <p style={{ color: "#f5f5f2", textAlign: "center", padding: "48px 16px" }}>
+            {bookingLoadError}
+          </p>
         </div>
       </div>
     );
@@ -314,14 +341,17 @@ export default function PaymentPage() {
   return (
     <div className={styles.page}>
       <TopBar
-        variant={currentStep === 3 ? "app" : "checkout"}
+        variant={currentStep === 4 ? "app" : "checkout"}
         cancelLabel="Cancel Checkout"
-        onCancel={() => window.confirm("Cancel this checkout?") && handleBackToDashboard()}
+        onCancel={() =>
+          window.confirm("Cancel this checkout?") && handleBackToHome()
+        }
       />
 
-      {currentStep < 3 && <Stepper steps={stepsFor(currentStep)} />}
+      {currentStep < 4 && <Stepper steps={stepsFor(currentStep)} />}
 
-      <div className={styles.stepWrap}>
+      <div className={styles.stepWrap} key={currentStep}>
+        {/* Step 1: Information */}
         {currentStep === 1 && (
           <InformationStep
             booking={booking}
@@ -331,9 +361,8 @@ export default function PaymentPage() {
           />
         )}
 
-        {currentStep === 2 && showVerifying && <VerifyingPayment />}
-
-        {currentStep === 2 && !showVerifying && (
+        {/* Step 2: Payment */}
+        {currentStep === 2 && (
           <PaymentStep
             booking={booking}
             displayTotals={displayTotals}
@@ -344,21 +373,38 @@ export default function PaymentPage() {
             phase={paymentPhase}
             failureMessage={failureMessage}
             onBack={goToInformation}
-            onPayAttemptStart={handlePayAttemptStart}
-            onPixelComplete={handlePixelComplete}
+            onProceedToReview={goToReview}
             onRetrySetup={handleRetrySetup}
           />
         )}
 
-        {currentStep === 3 && confirmedOrder && (
+        {/* Step 3: Review */}
+        {currentStep === 3 && showVerifying && <VerifyingPayment />}
+        {currentStep === 3 && !showVerifying && (
+          <ReviewStep
+            booking={booking}
+            userInfo={userInfo}
+            displayTotals={displayTotals}
+            isConfirming={paymentPhase === "starting"}
+            onConfirm={handleConfirmAndPay}
+            onBack={goBackToPayment}
+          />
+        )}
+
+        {/* Step 4: Confirmation */}
+        {currentStep === 4 && (
           <ConfirmationStep
             booking={booking}
-            bookingRef={confirmedOrder.transactionId ? `DRB-${confirmedOrder.transactionId}` : `DRB-${bookingIdRef.current}`}
-            transactionId={confirmedOrder.transactionId}
-            method={confirmedOrder.paymentMethodType}
-            cardLast4={confirmedOrder.cardLast4}
+            bookingRef={
+              confirmedOrder?.transactionId
+                ? `DRB-${confirmedOrder.transactionId}`
+                : `DRB-${booking.id || bookingIdRef.current}`
+            }
+            transactionId={confirmedOrder?.transactionId}
+            method={confirmedOrder?.paymentMethodType || "Credit Card (Online)"}
+            cardLast4={confirmedOrder?.cardLast4}
             totals={displayTotals}
-            onBackToDashboard={handleBackToDashboard}
+            onBackToHome={handleBackToHome}
           />
         )}
       </div>

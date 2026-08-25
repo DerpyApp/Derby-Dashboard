@@ -1,32 +1,38 @@
+/* ── Card ──────────────────────────────────────────────────── */
 .card {
   background-color: var(--derby-bg-alt);
   border: 1px solid var(--derby-border);
   border-radius: 14px;
-  padding: 1.8rem;
-  margin-bottom: 1.5rem;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.25rem;
 }
 
 .cardTitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.2rem;
+  color: var(--derby-text);
+  letter-spacing: 0.01em;
 }
 
 .cardTitleIcon {
   color: var(--derby-green);
 }
 
+/* ── Labels ────────────────────────────────────────────────── */
 .label {
   color: var(--derby-text-muted);
   font-size: 0.68rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
+  font-weight: 600;
 }
 
+/* ── Inputs ────────────────────────────────────────────────── */
 .inputWrap {
   position: relative;
   display: flex;
@@ -39,6 +45,7 @@
   color: var(--derby-text-muted);
   font-size: 0.9rem;
   z-index: 2;
+  pointer-events: none;
 }
 
 .input {
@@ -46,17 +53,20 @@
   border: 1px solid var(--derby-border) !important;
   color: var(--derby-text) !important;
   border-radius: 8px !important;
-  padding: 0.6rem 1rem 0.6rem 2.3rem !important;
+  padding: 0.65rem 1rem 0.65rem 2.4rem !important;
   font-size: 0.9rem;
+  width: 100%;
+  transition: border-color 0.15s ease;
 }
 
 .input::placeholder {
-  color: #6b6e64;
+  color: #565952;
 }
 
 .input:focus {
   border-color: var(--derby-green) !important;
-  box-shadow: 0 0 0 1px var(--derby-green) !important;
+  box-shadow: 0 0 0 1.5px var(--derby-green) !important;
+  outline: none;
 }
 
 .inputInvalid {
@@ -64,7 +74,7 @@
 }
 
 .inputInvalid:focus {
-  box-shadow: 0 0 0 1px #ff5c5c !important;
+  box-shadow: 0 0 0 1.5px #ff5c5c !important;
 }
 
 .errorText {
@@ -73,45 +83,49 @@
   margin-top: 0.35rem;
 }
 
+/* ── Grid info cells ──────────────────────────────────────── */
 .gridLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   color: var(--derby-text-muted);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
+  font-weight: 600;
   margin-bottom: 0.3rem;
 }
 
 .gridValue {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--derby-text);
 }
 
-.checkbox {
-  color: var(--derby-text-muted);
-  font-size: 0.85rem;
-}
-
-/* Buttons */
+/* ── Buttons ───────────────────────────────────────────────── */
 .btnPrimary {
   background-color: var(--derby-green) !important;
   border: none !important;
-  color: #0e0f0c !important;
-  font-weight: 700;
-  border-radius: 8px;
-  padding: 0.8rem 1.4rem;
+  color: #0a0c06 !important;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border-radius: 9px;
+  padding: 0.85rem 1.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   transition: transform 0.12s ease, opacity 0.12s ease;
+  letter-spacing: 0.02em;
 }
 
 .btnPrimary:hover:not(:disabled) {
+  opacity: 0.88;
   transform: translateY(-1px);
 }
 
 .btnPrimary:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
@@ -121,9 +135,14 @@
   border: 1px solid var(--derby-border) !important;
   color: var(--derby-text) !important;
   font-weight: 600;
-  border-radius: 8px;
-  padding: 0.8rem 1.4rem;
-  transition: border-color 0.12s ease, color 0.12s ease;
+  font-size: 0.9rem;
+  border-radius: 9px;
+  padding: 0.85rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
 .btnGhost:hover:not(:disabled) {

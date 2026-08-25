@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Lock, Eye, EyeOff, ShieldCheck, ArrowLeft } from 'lucide-react';
 
 import { resetPasswordSchema } from '@features/auth/schemas/authSchemas';
 import { resetPassword } from '@features/auth/api/authApi';
@@ -11,13 +11,14 @@ import { ROUTES } from '@config/constants';
 import Input from '@components/ui/Input/Input';
 import Button from '@components/ui/Button/Button';
 import Modal from '@components/ui/Modal/Modal';
+import Alert from '@components/ui/Alert';
 
 function getStrength(password = '') {
   let score = 0;
   if (password.length >= 8) score++;
-  if (/[A-Z]/.test(password))        score++;
-  if (/[a-z]/.test(password))        score++;
-  if (/[0-9]/.test(password))        score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
   if (/[^A-Za-z0-9]/.test(password)) score++;
   return score;
 }
@@ -96,15 +97,13 @@ export default function ResetPasswordForm() {
           </p>
         </div>
 
-        {/* Server error */}
+        {/* Server error alert */}
         {serverError && (
-          <div
-            role="alert"
-            className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm animate-fade-in"
-          >
-            <span className="shrink-0">⚠️</span>
-            {serverError}
-          </div>
+          <Alert
+            variant="error"
+            message={serverError}
+            onClose={() => setServerError('')}
+          />
         )}
 
         {/* Form */}
@@ -188,6 +187,17 @@ export default function ResetPasswordForm() {
           >
             Reset password
           </Button>
+
+          <div className="text-center pt-2">
+            <Link
+              to={ROUTES.LOGIN}
+              id="reset-back-link"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to Login
+            </Link>
+          </div>
         </form>
       </div>
 

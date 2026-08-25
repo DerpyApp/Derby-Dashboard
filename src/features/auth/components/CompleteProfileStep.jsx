@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { UserCheck, Zap, TrendingUp, MapPin, Flag, Search, ArrowRight } from 'lucide-react';
 
-export const CompleteProfileStep = ({ formData, setFormData, onSubmit }) => {
+export const CompleteProfileStep = ({ formData, isSubmitting = false, setFormData, onSubmit }) => {
   const positions = ['GK', 'Defender', 'Winger', 'Striker'];
   const cities = ['Cairo', 'Giza', 'Alexandria', 'Aswan', 'Luxor'];
   const sportsList = [
@@ -198,10 +198,17 @@ export const CompleteProfileStep = ({ formData, setFormData, onSubmit }) => {
         {/* Submit Finish Button */}
         <button
           type="submit"
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C8F13A] py-3 text-xs font-semibold text-black transition-all hover:bg-[#b0d82d] active:scale-[0.99]"
+          disabled={isSubmitting}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C8F13A] py-3 text-xs font-semibold text-black transition-all hover:bg-[#b0d82d] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <span>Finish</span>
-          <ArrowRight className="h-4 w-4 text-black" />
+          {isSubmitting ? (
+            <span className="inline-block h-4 w-4 rounded-full border-2 border-black border-t-transparent animate-spin" />
+          ) : (
+            <>
+              <span>Finish</span>
+              <ArrowRight className="h-4 w-4 text-black" />
+            </>
+          )}
         </button>
       </form>
     </div>

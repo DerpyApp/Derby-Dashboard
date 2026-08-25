@@ -1,14 +1,32 @@
-
 import { apiClient } from "./apiClient";
 
-// This page now talks directly to the PadelBooking .NET API described in
-// API_FLOW.md (Step 3 — Booking, Step 4 — Payment). The old local
-// Express/Paymob server is gone: PadelBooking creates the Paymob Intention
-// itself server-side and hands back what we need to render checkout.
+/**
+ * POST /api/Booking — creates a new booking.
+ * Returns the created booking object with bookingId and status.
+ *
+ * @param {{
+ *   facilityId: number,
+ *   courtId: number,
+ *   date: string,        // ISO date-time e.g. "2026-08-25T00:00:00Z"
+ *   startTime: string,   // TimeSpan string e.g. "18:00:00"
+ *   endTime: string,     // TimeSpan string e.g. "19:00:00"
+ *   paymentMethod?: string
+ * }} bookingPayload
+ */
+export async function createBooking(bookingPayload) {
+  const res = await apiClient.post("/Booking", {
+    facilityId: Number(bookingPayload.facilityId),
+    courtId: Number(bookingPayload.courtId),
+    date: bookingPayload.date,
+    startTime: bookingPayload.startTime,
+    endTime: bookingPayload.endTime,
+    paymentMethod: bookingPayload.paymentMethod || "Online",
+  });
+  return res.data;
+}
 
 /**
- * GET /api/Booking/{bookingId} — used to populate the summary shown in the
- * Information and Payment steps (venue, date/time, price).
+ * GET /api/Booking/{bookingId} — retrieves the full booking record
  */
 export async function fetchBooking(bookingId) {
   const res = await apiClient.get(`/Booking/${bookingId}`);
@@ -16,19 +34,31 @@ export async function fetchBooking(bookingId) {
 }
 
 /**
- * POST /api/Payments/intent — creates the Paymob Intention for this booking.
- * Response includes `clientSecret` (for the embedded Pixel form) and
- * `paymentUrl` (hosted fallback). Any extra fields the backend adds (e.g. a
- * payment id to use with getPaymentDetails below) are passed through as-is.
+ * GET /api/Booking/me — retrieves current user's bookings
  */
-export async function createPaymentIntent(bookingId) {
-  const res = await apiClient.post("/Payments/intent", { bookingId });
+export async function fetchMyBookings() {
+  const res = await apiClient.get("/Booking/me");
   return res.data;
 }
 
 /**
- * GET /api/Payments/{paymentId} — polled after the user completes the Pixel
- * form (or returns from the hosted Paymob page) to check the verified status.
+ * POST /api/Booking/{bookingId}/cancel — cancels a booking
+ */
+export async function cancelBooking(bookingId) {
+  const res = await apiClient.post(`/Booking/${bookingId}/cancel`);
+  return res.data;
+}
+
+/**
+ * POST /api/Payments/intent — creates the Paymob intention for a booking
+ */
+export async function createPaymentIntent(bookingId) {
+  const res = await apiClient.post("/Payments/intent", { bookingId: Number(bookingId) || bookingId });
+  return res.data;
+}
+
+/**
+ * GET /api/Payments/{paymentId} — retrieves payment details and status
  */
 export async function getPaymentDetails(paymentId) {
   const res = await apiClient.get(`/Payments/${paymentId}`);

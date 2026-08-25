@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft } from 'lucide-react';
 
 import forgotIcon from '@assets/forgot-icon.png';
+import Alert from '@components/ui/Alert';
 
 import { forgotPasswordSchema } from '@features/auth/schemas/authSchemas';
 import { sendOTP } from '@features/auth/api/authApi';
@@ -18,6 +19,7 @@ import { ROUTES } from '@config/constants';
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -32,11 +34,20 @@ export default function ForgotPasswordForm() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setServerError('');
+    setSuccessMessage('');
     try {
-      await sendOTP({ email: data.email });
-      navigate(ROUTES.OTP, { state: { email: data.email } });
+      const response = await sendOTP({ email: data.email });
+      const successMsg = response?.message || 'OTP sent successfully to your email!';
+      setSuccessMessage(successMsg);
+      // Navigate to OTP form with email and success message in state
+      navigate(ROUTES.OTP, {
+        state: {
+          email: data.email,
+          successMessage: successMsg,
+        },
+      });
     } catch (err) {
-      setServerError(err.message || 'Failed to send OTP. Please try again.');
+      setServerError(err.message || 'Failed to send OTP to email. Please check your email and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -102,16 +113,20 @@ export default function ForgotPasswordForm() {
           </p>
         </div>
 
-        {/* ── Server error ───────────────────────────────────────── */}
+        {/* ── Status Alerts ─────────────────────────────────────── */}
         {serverError && (
-          <div
-            role="alert"
-            className="flex items-center gap-2.5 p-3.5 rounded-xl text-red-400 text-sm"
-            style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)' }}
-          >
-            <span className="shrink-0">⚠️</span>
-            {serverError}
-          </div>
+          <Alert
+            variant="error"
+            message={serverError}
+            onClose={() => setServerError('')}
+          />
+        )}
+        {successMessage && (
+          <Alert
+            variant="success"
+            message={successMessage}
+            onClose={() => setSuccessMessage('')}
+          />
         )}
 
         {/* ── Form ───────────────────────────────────────────────── */}

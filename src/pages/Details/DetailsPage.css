@@ -793,3 +793,199 @@ body {
     gap: 18px;
   }
 }
+
+/* ================= LIVE BOOKING & AVAILABILITY STYLES ================= */
+
+.details-alert-box {
+  background: rgba(255, 92, 92, 0.15);
+  border: 1px solid rgba(255, 92, 92, 0.4);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #ff8080;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details-alert-box button {
+  background: transparent;
+  border: none;
+  color: #ff8080;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.date-selection-card {
+  padding: 16px 20px !important;
+}
+
+.date-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.date-picker-header h2 {
+  font-size: 16px !important;
+  margin: 0 !important;
+}
+
+.date-input-field {
+  background: #11161c;
+  border: 1px solid #354039;
+  color: #f5f5f5;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color-scheme: dark;
+}
+
+.date-chips-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.date-chip {
+  background: #11161c;
+  border: 1px solid #2d3830;
+  color: #aeb5bc;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.date-chip:hover {
+  border-color: #ceff00;
+  color: #fff;
+}
+
+.date-chip.active {
+  background: #ceff00;
+  color: #0e0f0c;
+  font-weight: 700;
+  border-color: #ceff00;
+}
+
+.courts-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0 15px;
+}
+
+.courts-header-row .available-title {
+  margin: 0;
+}
+
+.availability-loading-badge {
+  font-size: 11px;
+  color: #ceff00;
+  background: rgba(206, 255, 0, 0.12);
+  border: 1px solid rgba(206, 255, 0, 0.25);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.slots-section {
+  margin-top: 14px;
+  border-top: 1px solid #26313a;
+  padding-top: 12px;
+}
+
+.slots-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ea6ad;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.slot-chip {
+  background: #11161c;
+  border: 1px solid #2d3830;
+  color: #c5cbd0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.slot-chip:hover:not(:disabled) {
+  border-color: #ceff00;
+  color: #ceff00;
+}
+
+.slot-chip.selected {
+  background: #ceff00;
+  color: #0e0f0c;
+  font-weight: 700;
+  border-color: #ceff00;
+  box-shadow: 0 0 8px rgba(206, 255, 0, 0.35);
+}
+
+.slot-chip.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.slots-empty-notice {
+  font-size: 12px;
+  color: #8d969e;
+  padding: 6px 0;
+}
+
+.court-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #26313a;
+}
+
+.court-price-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: 10px;
+  color: #8d969e;
+  text-transform: uppercase;
+}
+
+.price-value {
+  color: #ceff00;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.details-loading-placeholder {
+  padding: 40px;
+  text-align: center;
+  color: #aeb5bc;
+  background: #181d22;
+  border-radius: 9px;
+  border: 1px solid #354039;
+}
+
+

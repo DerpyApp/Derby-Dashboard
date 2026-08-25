@@ -1,12 +1,12 @@
 import { Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@config/constants';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
 
   const handleBackToHome = () => {
-    // Navigate to home (or login if home isn't ready yet)
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   return (

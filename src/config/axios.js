@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import axios from 'axios';
-import { TOKEN_KEY, ROUTES } from './constants';
+import { REFRESH_TOKEN_KEY, TOKEN_KEY, USER_KEY, ROUTES } from './constants';
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000',
@@ -37,6 +37,8 @@ apiClient.interceptors.response.use(
     if (response?.status === 401) {
       // Clear all auth data and redirect to login
       localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
       // Avoid redirect loops if already on an auth page
       const authPaths = [ROUTES.LOGIN, ROUTES.REGISTER, ROUTES.FORGOT_PASSWORD];
       if (!authPaths.includes(window.location.pathname)) {

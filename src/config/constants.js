@@ -5,13 +5,16 @@
 
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: '/api/auth/login',
-    REGISTER: '/api/auth/register',
-    SEND_OTP: '/api/auth/send-otp',
-    VERIFY_OTP: '/api/auth/verify-otp',
-    RESET_PASSWORD: '/api/auth/reset-password',
-    REFRESH_TOKEN: '/api/auth/refresh-token',
-    LOGOUT: '/api/auth/logout',
+    LOGIN: '/api/User/login',
+    REGISTER: '/api/User/register',
+    GOOGLE_LOGIN: '/api/User/google-login',
+    FACEBOOK_LOGIN: '/api/User/facebook-login',
+    FORGOT_PASSWORD: '/api/User/forgot-password',
+    SEND_OTP: '/api/User/forgot-password',
+    VERIFY_OTP: '/api/User/verify-otp',
+    RESET_PASSWORD: '/api/User/reset-password',
+    REFRESH_TOKEN: '/api/User/refresh',
+    LOGOUT: '/api/User/logout',
   },
   COURTS: {
     LIST: '/api/courts',
@@ -19,10 +22,10 @@ export const API_ENDPOINTS = {
     AVAILABILITY: (id) => `/api/courts/${id}/availability`,
   },
   BOOKINGS: {
-    LIST: '/api/bookings',
-    CREATE: '/api/bookings',
-    DETAIL: (id) => `/api/bookings/${id}`,
-    CANCEL: (id) => `/api/bookings/${id}/cancel`,
+    LIST: '/api/Booking/me',
+    CREATE: '/api/Booking',
+    DETAIL: (id) => `/api/Booking/${id}`,
+    CANCEL: (id) => `/api/Booking/${id}/cancel`,
   },
   USER: {
     PROFILE: '/api/user/profile',
@@ -36,6 +39,14 @@ export const API_ENDPOINTS = {
 
 export const APP_NAME = 'Derpy';
 export const APP_TAGLINE = 'Book Your Court. Play Your Game.';
+
+export const GOOGLE_CLIENT_ID =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+  '820082278812-cq7e1mfu8m4bisvq68apb3ff8nioefie.apps.googleusercontent.com';
+
+export const FACEBOOK_APP_ID =
+  import.meta.env.VITE_FACEBOOK_APP_ID ||
+  '1540732264400627';
 
 export const TOKEN_KEY = 'derpy_access_token';
 export const REFRESH_TOKEN_KEY = 'derpy_refresh_token';

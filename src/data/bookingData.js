@@ -1,9 +1,5 @@
 import defaultBookingImage from "../assets/details/football-court.png";
 
-// DEFAULT_BOOKING is now only a loading-state skeleton, shown for the
-// instant before the real booking loads from PadelBooking's
-// GET /api/Booking/{bookingId} (see src/api/paymentApi.js). It is never the
-// source of truth for price — that always comes from the API response.
 export const DEFAULT_BOOKING = {
   id: null,
   image: defaultBookingImage,
@@ -28,37 +24,108 @@ export const DEFAULT_USER_INFO = {
   phone: "",
 };
 
-// PadelBooking's GET /api/Booking/{bookingId} response shape for
-// venue/date/price fields isn't spelled out in API_FLOW.md (its example
-// response is just `{ "bookingId": 101, "status": "Pending", ... }`), so
-// this reads a handful of likely field names defensively and falls back
-// gracefully. Adjust the field names on the right if your real payload
-// uses different ones.
+function formatTimeSlot(timeStr) {
+  if (!timeStr) return "";
+  const parts = String(timeStr).split(":");
+  if (parts.length < 2) return timeStr;
+  let h = parseInt(parts[0], 10);
+  const m = parts[1];
+  const ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h}:${m} ${ampm}`;
+}
+
+function calculateDurationMinutes(startTime, endTime) {
+  if (!startTime || !endTime) return "60 mins";
+  const [h1, m1] = startTime.split(":").map(Number);
+  const [h2, m2] = endTime.split(":").map(Number);
+  if (isNaN(h1) || isNaN(h2)) return "60 mins";
+  let mins = (h2 * 60 + (m2 || 0)) - (h1 * 60 + (m1 || 0));
+  if (mins <= 0) mins += 24 * 60;
+  return `${mins} mins`;
+}
+
+function formatDateString(dateStr) {
+  if (!dateStr) return "";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
+/**
+ * Maps raw backend GET /api/Booking/{id} or creation response to frontend view model
+ */
 export function mapBookingResponse(apiBooking) {
   if (!apiBooking) return DEFAULT_BOOKING;
 
   const pricing = apiBooking.pricing || apiBooking.priceBreakdown || {};
   const pitchFee =
-    pricing.pitchFee ?? apiBooking.pitchFee ?? apiBooking.price ?? apiBooking.courtPrice ?? 0;
+    pricing.pitchFee ??
+    apiBooking.totalPrice ??
+    apiBooking.pitchFee ??
+    apiBooking.price ??
+    apiBooking.courtPrice ??
+    0;
   const serviceFee = pricing.serviceFee ?? apiBooking.serviceFee ?? 0;
   const taxRate = pricing.taxRate ?? apiBooking.taxRate ?? 0;
 
+  const rawDate = apiBooking.bookingDate || apiBooking.date;
+  const formattedDate = formatDateString(rawDate);
+
+  const rawStartTime = apiBooking.startTime;
+  const rawEndTime = apiBooking.endTime;
+
+  let formattedTime = apiBooking.time;
+  if (!formattedTime && rawStartTime && rawEndTime) {
+    formattedTime = `${formatTimeSlot(rawStartTime)} - ${formatTimeSlot(rawEndTime)}`;
+  } else if (!formattedTime && rawStartTime) {
+    formattedTime = formatTimeSlot(rawStartTime);
+  }
+
+  const duration =
+    apiBooking.duration ||
+    calculateDurationMinutes(rawStartTime, rawEndTime);
+
+  const sportName =
+    apiBooking.sport ||
+    (apiBooking.courtName?.toLowerCase().includes("padel")
+      ? "Padel"
+      : apiBooking.courtName?.toLowerCase().includes("football")
+      ? "Football"
+      : "Sports");
+
   return {
-    id: apiBooking.bookingId ?? apiBooking.id,
-    image: apiBooking.image || apiBooking.venueImage || DEFAULT_BOOKING.image,
-    venueName: apiBooking.venueName || apiBooking.facilityName || apiBooking.clubName || "Booking",
-    location: apiBooking.location || apiBooking.address || "",
-    sport: apiBooking.sport || apiBooking.sportType || "",
-    sportMeta: apiBooking.sportMeta || "",
-    date: apiBooking.date || "",
-    time:
-      apiBooking.time ||
-      (apiBooking.startTime && apiBooking.endTime
-        ? `${apiBooking.startTime} - ${apiBooking.endTime}`
-        : ""),
-    duration: apiBooking.duration || "",
+    id: apiBooking.id ?? apiBooking.bookingId,
+    image: apiBooking.coverImage || apiBooking.image || apiBooking.venueImage || defaultBookingImage,
+    venueName:
+      apiBooking.clubName ||
+      apiBooking.venueName ||
+      apiBooking.facilityName ||
+      "Derby Club",
+    location: apiBooking.location || apiBooking.address || "Cairo, Egypt",
+    sport: sportName,
+    sportMeta: apiBooking.courtName || apiBooking.sportMeta || "",
+    courtName: apiBooking.courtName || "",
+    date: formattedDate || "",
+    time: formattedTime || "",
+    rawDate,
+    rawStartTime,
+    rawEndTime,
+    duration,
     currency: apiBooking.currency || "EGP",
     pricing: { pitchFee, serviceFee, taxRate },
-    status: apiBooking.status,
+    status: apiBooking.status || "Pending",
+    paymentStatus: apiBooking.paymentStatus,
+    userId: apiBooking.userId,
+    facilityId: apiBooking.facilityId,
+    courtId: apiBooking.courtId,
   };
 }

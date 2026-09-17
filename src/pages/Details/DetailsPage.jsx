@@ -276,10 +276,18 @@ export default function DetailsPage() {
   return (
     <div className="details-page">
       {/* ================= HERO ================= */}
-      <section
-        className="details-hero"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
+      <section className="details-hero">
+        <img
+          src={
+            typeof club?.coverImage === 'string' && club.coverImage.trim() !== ''
+              ? club.coverImage
+              : mainContentFallback
+          }
+          alt={club?.name || "Derby Club"}
+          className="details-hero__img"
+          onError={(e) => { e.currentTarget.src = mainContentFallback; }}
+        />
+      </section>
 
       {/* ================= MAIN CONTENT ================= */}
       <main className="details-main">
@@ -387,9 +395,10 @@ export default function DetailsPage() {
                   return (
                     <div className="court-card" key={court.id}>
                       <img
-                        src={courtImage}
+                        src={courtImage?.src ?? courtImage}
                         alt={court.name}
                         className="court-image"
+                        onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x400?text=Derby'; }}
                       />
 
                       <div className="court-info">

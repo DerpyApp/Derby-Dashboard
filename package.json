@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Derpy — Smart Sports Court Booking Platform",
+  "description": "Derby — Smart Sports Court Booking Platform",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

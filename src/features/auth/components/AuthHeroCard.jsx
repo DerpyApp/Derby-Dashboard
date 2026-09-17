@@ -33,7 +33,7 @@ export default function AuthHeroCard() {
           Your Rules.
         </h1>
         <p className="text-brand-muted text-base leading-relaxed">
-          Derpy connects athletes with the best sports facilities. Book, play, repeat.
+          Derby connects athletes with the best sports facilities. Book, play, repeat.
         </p>
       </div>
 
@@ -67,7 +67,7 @@ export default function AuthHeroCard() {
         </div>
         <div>
           <p className="text-sm font-semibold text-brand-light">50,000+ Athletes</p>
-          <p className="text-xs text-brand-muted/60">already playing with Derpy</p>
+          <p className="text-xs text-brand-muted/60">already playing with Derby</p>
         </div>
       </div>
     </div>

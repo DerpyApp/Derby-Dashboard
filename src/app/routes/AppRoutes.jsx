@@ -22,7 +22,7 @@ function DashboardPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-brand-bg text-brand-light">
       <h1 className="mb-2 text-4xl font-bold gradient-text">
-        Welcome to Derpy
+        Welcome to Derby
       </h1>
       <p className="text-brand-muted">Dashboard coming soon...</p>
     </div>

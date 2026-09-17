@@ -12,7 +12,7 @@ function ResetHero() {
           <span className="gradient-text">Password</span>
         </h1>
         <p className="text-brand-muted text-base leading-relaxed">
-          Choose a strong password to keep your Derpy account safe.
+          Choose a strong password to keep your Derby account safe.
         </p>
       </div>
     </div>

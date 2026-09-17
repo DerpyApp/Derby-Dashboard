@@ -37,7 +37,7 @@ export const API_ENDPOINTS = {
 //  App-wide constants
 // ─────────────────────────────────────────────────────────────
 
-export const APP_NAME = 'Derpy';
+export const APP_NAME = 'Derby';
 export const APP_TAGLINE = 'Book Your Court. Play Your Game.';
 
 export const GOOGLE_CLIENT_ID =
